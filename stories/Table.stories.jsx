@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from '../src/Table';
-import './tailwind.css';
 
 export default {
   title: 'Example/Table',
