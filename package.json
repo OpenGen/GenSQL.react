@@ -28,7 +28,10 @@
     "prepack": "babel src --out-dir lib",
     "storybook": "start-storybook -p 6006"
   },
-  "files": ["./lib/**/*.js"],
-  "main": "./lib/index.js",
-  "type": "module"
+  "files": [
+    "./lib/**/*.js"
+  ],
+  "main": "index.js",
+  "type": "module",
+  "packageManager": "yarn@3.2.1"
 }
