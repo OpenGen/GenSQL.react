@@ -25,7 +25,6 @@
   "scripts": {
     "build-storybook": "build-storybook",
     "prepack": "babel src --out-dir lib",
-    "prepare": "babel src --out-dir lib",
     "storybook": "start-storybook -p 6006"
   },
   "files": ["./lib/**/*.@(js|jsx|ts|tsx)"],
