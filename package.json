@@ -24,5 +24,6 @@
     "build-storybook": "build-storybook"
   },
   "main": "./index.js",
-  "files": ["./src/**/*.@(js|jsx|ts|tsx)"]
+  "files": ["./src/**/*.@(js|jsx|ts|tsx)"],
+  "type": "module"
 }
