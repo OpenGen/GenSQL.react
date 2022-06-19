@@ -23,5 +23,6 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
+  "main": "./index.js",
   "files": ["./src/**/*.@(js|jsx|ts|tsx)"]
 }
