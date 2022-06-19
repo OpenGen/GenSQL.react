@@ -6,7 +6,7 @@ This library is not currently published to NPM, but it can still be depended upo
 
 ``` json
 "dependencies": {
-  "@OpenIQL/inferenceql.components": "OpenIQL/storybook"
+  "@openiql/inferenceql.components": "OpenIQL/storybook"
 }
 ```
 
