@@ -1,6 +1,5 @@
 import React from 'react';
 import { Query } from '../src/Query';
-import './tailwind.css';
 
 export default {
   title: 'Example/Query',

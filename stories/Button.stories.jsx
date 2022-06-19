@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '../src/Button';
-import './tailwind.css';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
