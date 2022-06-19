@@ -28,6 +28,6 @@
     "storybook": "start-storybook -p 6006"
   },
   "files": ["./lib/**/*.@(js|jsx|ts|tsx)"],
-  "main": "./index.js",
+  "main": "./lib/index.js",
   "type": "module"
 }
