@@ -28,7 +28,7 @@
     "prepack": "babel src --out-dir lib",
     "storybook": "start-storybook -p 6006"
   },
-  "files": ["./lib/**/*.@(js|jsx|ts|tsx)"],
+  "files": ["./lib/**/*.js"],
   "main": "./lib/index.js",
   "type": "module"
 }
