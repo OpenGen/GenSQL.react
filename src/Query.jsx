@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from './Button';
 import { Table } from './Table';
 import { TextArea } from './TextArea';
-import './tailwind.css';
 
 export const Query = (props) => {
   const [query, setQuery] = React.useState();

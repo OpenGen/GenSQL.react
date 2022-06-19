@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './tailwind.css';
 
 export const TextArea = React.forwardRef((props, ref) => {
   var ref = ref || React.useRef();

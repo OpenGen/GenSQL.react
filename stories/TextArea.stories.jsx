@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { TextArea } from './TextArea';
+import { TextArea } from '../src/TextArea';
+import './tailwind.css';
 
 export default {
   title: 'Example/TextArea',

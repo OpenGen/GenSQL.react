@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { Spinner } from './Spinner';
+import { Spinner } from '../src/Spinner';
+import './tailwind.css';
 
 export default {
   title: 'Example/Spinner',
