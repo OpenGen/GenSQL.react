@@ -18,7 +18,6 @@ export const Query = (props) => {
     setResult(props.execute(query));
     setFocus(false);
     buttonRef.current.focus();
-    textAreaRef.current.blur();
   };
   const queryButton = (<Button type="primary" ref={buttonRef} onClick={execute}>Execute</Button>);
 
