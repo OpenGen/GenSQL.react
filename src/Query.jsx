@@ -50,7 +50,7 @@ export const Query = (props) => {
         dataSource={dataSource}
         pagination={false}
         size="small"
-        style={{ marginTop: 24 }}
+        style={{ display: "inline-block", marginTop: 24 }}
         tableLayout="auto"
       />
     );
