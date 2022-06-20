@@ -25,7 +25,7 @@ const usePrevious = (value) => {
 }
 
 export const Query = (props) => {
-  const [query, setQuery] = React.useState(props.value);
+  const [query, setQuery] = React.useState(props.initialQuery);
   const [queryResult, setQueryResult] = React.useState();
 
   const buttonRef = React.useRef();
@@ -89,5 +89,5 @@ export const Query = (props) => {
 Query.propTypes = {
   execute: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  initialQuery: PropTypes.string,
 };
