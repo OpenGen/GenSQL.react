@@ -26,31 +26,31 @@ const usePrevious = (value) => {
 
 export const Query = (props) => {
   const [query, setQuery] = React.useState(props.value);
-  const [result, setResult] = React.useState();
+  const [queryResult, setQueryResult] = React.useState();
 
   const buttonRef = React.useRef();
   const textAreaRef = React.useRef();
 
+  const handleExecute = () => { setQueryResult(props.execute(query)); };
+  const handleReset = () => { setQueryResult(); };
+
   const onChange = (event) => { setQuery(event.target.value); }
-
-  const handleExecute = () => { setResult(props.execute(query)); };
-  const handleReset = () => { setResult(); };
-
-  // Focus botton when gaining results, focus textarea when losing results.
-  const previousResult = usePrevious(result);
-  React.useEffect(() => {
-    if (!result && previousResult) {
-      textAreaRef.current.focus({ cursor: "all" });
-    } else if (result && !previousResult) {
-      buttonRef.current.focus();
-    }
-  }, [result, previousResult]);
 
   const onKeyPress = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
       handleExecute();
     }
   };
+
+  // Focus botton when gaining queryResults, focus textarea when losing queryResults.
+  const previousQueryResult = usePrevious(queryResult);
+  React.useEffect(() => {
+    if (!queryResult && previousQueryResult) {
+      textAreaRef.current.focus({ cursor: "all" });
+    } else if (queryResult && !previousQueryResult) {
+      buttonRef.current.focus();
+    }
+  }, [queryResult, previousQueryResult]);
 
   return (
     <Card>
@@ -59,7 +59,7 @@ export const Query = (props) => {
           <TextArea
             autoSize
             defaultValue={query}
-            disabled={result !== undefined}
+            disabled={queryResult !== undefined}
             onChange={onChange}
             onKeyPress={onKeyPress}
             placeholder={props.placeholder}
@@ -67,16 +67,16 @@ export const Query = (props) => {
           />
         </Form.Item>
         <Form.Item style={{ marginBottom: 0}}>
-          {result
+          {queryResult
            ? <Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>
            : <Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>}
         </Form.Item>
       </Form>
-      {result &&
+      {queryResult &&
        <Table
          bordered
-         columns={tableColumns(result.columns)}
-         dataSource={tableDataSource(result.data)}
+         columns={tableColumns(queryResult.columns)}
+         dataSource={tableDataSource(queryResult.data)}
          pagination={false}
          size="small"
          style={{ display: "inline-block", marginTop: 24 }}
