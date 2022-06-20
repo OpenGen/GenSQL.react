@@ -39,9 +39,11 @@ export const Query = (props) => {
         key: index,
       };
     });
+
     const dataSource = result.data.map((datum, index) => {
       return { key: index, ...datum };
     });
+
     table = (
       <Table
         bordered
