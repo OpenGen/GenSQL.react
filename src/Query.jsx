@@ -42,7 +42,6 @@ export const Query = (props) => {
     }
   };
 
-  // Focus botton when gaining queryResults, focus textarea when losing queryResults.
   const previousQueryResult = usePrevious(queryResult);
   React.useEffect(() => {
     if (!queryResult && previousQueryResult) {
