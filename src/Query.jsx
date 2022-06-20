@@ -24,6 +24,14 @@ const usePrevious = (value) => {
   return ref.current;
 }
 
+const QueryButton = React.forwardRef((props, ref) => {
+  if (props.result) {
+    return <Button type="primary" ref={ref} onClick={props.handleReset}>Reset</Button>
+  } else {
+    return <Button type="primary" ref={ref} onClick={props.handleExecute}>Execute</Button>;
+  }
+});
+
 export const Query = (props) => {
   const [query, setQuery] = React.useState(props.value);
   const [result, setResult] = React.useState();
@@ -35,11 +43,6 @@ export const Query = (props) => {
 
   const handleExecute = () => { setResult(props.execute(query)); };
   const handleReset = () => { setResult(); };
-
-  const queryButton = (<Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>);
-  const resetButton = (<Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>);
-
-  const button = result ? resetButton : queryButton;
 
   var table;
   if (result) {
@@ -90,7 +93,12 @@ export const Query = (props) => {
           />
         </Form.Item>
         <Form.Item style={{ marginBottom: 0}}>
-          {button}
+          <QueryButton
+            result={result}
+            handleExecute={handleExecute}
+            handleReset={handleReset}
+            ref={buttonRef}
+          />
         </Form.Item>
       </Form>
       {table}
