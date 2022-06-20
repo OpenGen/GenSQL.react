@@ -5,7 +5,7 @@ import { Button, Card, Form, Input, Table } from 'antd';
 const { TextArea } = Input;
 
 export const Query = (props) => {
-  const [query, setQuery] = React.useState();
+  const [query, setQuery] = React.useState(props.value);
   const [result, setResult] = React.useState();
   const [focus, setFocus] = React.useState(undefined);
 
@@ -98,4 +98,5 @@ export const Query = (props) => {
 Query.propTypes = {
   execute: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+  value: PropTypes.string,
 };
