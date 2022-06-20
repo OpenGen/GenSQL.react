@@ -64,7 +64,7 @@ export const Query = (props) => {
       });
       setFocus(false);
     }
-  });
+  }, []);
 
   const onKeyPress = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
