@@ -34,8 +34,6 @@ export const Query = (props) => {
   const handleExecute = () => { setQueryResult(props.execute(query)); };
   const handleReset = () => { setQueryResult(); };
 
-  const onChange = (event) => { setQuery(event.target.value); }
-
   const onKeyPress = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
       handleExecute();
@@ -59,7 +57,7 @@ export const Query = (props) => {
             autoSize
             defaultValue={query}
             disabled={queryResult !== undefined}
-            onChange={onChange}
+            onChange={(event) => setQuery(event.target.value)}
             onKeyPress={onKeyPress}
             placeholder={props.placeholder}
             ref={textAreaRef}
