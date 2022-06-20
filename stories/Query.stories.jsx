@@ -30,5 +30,5 @@ Placeholder.args = {
 export const Value = Template.bind({});
 Value.args = {
   execute: execute,
-  value: "SELECT * FROM data",
+  initialQuery: "SELECT * FROM data",
 };
