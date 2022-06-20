@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Card, Form, Input, Table } from 'antd';
 
-const { TextArea } = Input;
-
 const tableColumns = (columns) => (
   columns.map((column, index) => ({
     title: column,
@@ -53,7 +51,7 @@ export const Query = (props) => {
     <Card>
       <Form layout="horizontal">
         <Form.Item>
-          <TextArea
+          <Input.TextArea
             autoSize
             defaultValue={query}
             disabled={queryResult !== undefined}
