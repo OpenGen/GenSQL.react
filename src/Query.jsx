@@ -24,14 +24,6 @@ const usePrevious = (value) => {
   return ref.current;
 }
 
-const QueryButton = React.forwardRef((props, ref) => {
-  if (props.result) {
-    return <Button type="primary" ref={ref} onClick={props.handleReset}>Reset</Button>
-  } else {
-    return <Button type="primary" ref={ref} onClick={props.handleExecute}>Execute</Button>;
-  }
-});
-
 export const Query = (props) => {
   const [query, setQuery] = React.useState(props.value);
   const [result, setResult] = React.useState();
@@ -43,24 +35,6 @@ export const Query = (props) => {
 
   const handleExecute = () => { setResult(props.execute(query)); };
   const handleReset = () => { setResult(); };
-
-  var table;
-  if (result) {
-    const columns = tableColumns(result.columns);
-    const dataSource = tableDataSource(result.data);
-
-    table = (
-      <Table
-        bordered
-        columns={columns}
-        dataSource={dataSource}
-        pagination={false}
-        size="small"
-        style={{ display: "inline-block", marginTop: 24 }}
-        tableLayout="auto"
-      />
-    );
-  }
 
   // Focus botton when gaining results, focus textarea when losing results.
   const previousResult = usePrevious(result);
@@ -93,15 +67,21 @@ export const Query = (props) => {
           />
         </Form.Item>
         <Form.Item style={{ marginBottom: 0}}>
-          <QueryButton
-            result={result}
-            handleExecute={handleExecute}
-            handleReset={handleReset}
-            ref={buttonRef}
-          />
+          {result
+           ? <Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>
+           : <Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>}
         </Form.Item>
       </Form>
-      {table}
+      {result &&
+       <Table
+         bordered
+         columns={tableColumns(result.columns)}
+         dataSource={tableDataSource(result.data)}
+         pagination={false}
+         size="small"
+         style={{ display: "inline-block", marginTop: 24 }}
+         tableLayout="auto"
+       />}
     </Card>
   );
 };
