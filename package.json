@@ -2,6 +2,10 @@
   "name": "@openiql/inferenceql-components",
   "version": "0.0.1-alpha",
   "dependencies": {
+    "antd": "^4.21.3"
+  },
+  "peerDependencies": {
+    "@storybook/preset-ant-design": "^0.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -17,6 +21,7 @@
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/builder-webpack4": "^6.5.9",
     "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/preset-ant-design": "^0.0.2",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
     "babel-loader": "^8.2.5",
@@ -31,7 +36,5 @@
   },
   "files": [
     "./lib/**/*.js"
-  ],
-  "main": "index.js",
-  "type": "module"
+  ]
 }

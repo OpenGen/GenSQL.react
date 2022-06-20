@@ -1,8 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button } from './Button';
-import { Table } from './Table';
-import { TextArea } from './TextArea';
+import { Button } from 'antd';
+import { Card } from 'antd';
+import { Input } from 'antd';
+import { Option } from 'antd';
+import { Select } from 'antd';
+import { Space } from 'antd';
+import { Table } from 'antd';
+
+const { TextArea } = Input;
+
+const select = (
+  <Select defaultValue=".com" className="select-after">
+    <Option value=".com">.com</Option>
+    <Option value=".jp">.jp</Option>
+    <Option value=".cn">.cn</Option>
+    <Option value=".org">.org</Option>
+  </Select>
+);
 
 export const Query = (props) => {
   const [query, setQuery] = React.useState();
@@ -20,25 +35,54 @@ export const Query = (props) => {
     buttonRef.current.focus();
     textAreaRef.current.blur();
   };
-  const queryButton = (<Button label="Execute" ref={buttonRef} onClick={execute} />);
+  const queryButton = (<Button ref={buttonRef} onClick={execute}>Execute</Button>);
 
   const reset = () => {
     setResult();
     setFocus(true);
   };
-  const resetButton = (<Button label="Reset" ref={buttonRef} onClick={reset} />);
+  const resetButton = (<Button ref={buttonRef} onClick={reset}>Reset</Button>);
 
   const button = (result !== undefined) ? resetButton : queryButton;
 
+  const sorter = (column) => (a, b) => {
+    if (typeof(a[column]) === "string" && typeof(b[column]) === "string") {
+      return a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0;
+    } else {
+      return a[column] - b[column];
+    }
+  }
+
   var table;
   if (result !== undefined) {
-    table = (<Table headers={result.columns} data={result.data} />);
+    const columns = result.columns.map((column, index) => {
+      return {
+        title: column,
+        dataIndex: column,
+        key: index,
+        sorter: sorter(column)
+      };
+    });
+    const dataSource = result.data.map((datum, index) => {
+      return { key: index, ...datum };
+    });
+    table = (
+      <Table
+        bordered
+        columns={columns}
+        dataSource={dataSource}
+        size="small"
+        sortDirections={["ascend", "descend"]}
+        tableLayout="auto"
+      />
+    );
   }
 
   React.useEffect(() => {
     if (textAreaRef.current && focus) {
-      textAreaRef.current.focus();
-      textAreaRef.current.select();
+      textAreaRef.current.focus({
+        cursor: 'all',
+      });
       setFocus(false);
     }
   });
@@ -50,19 +94,25 @@ export const Query = (props) => {
   };
 
   return (
-    <div className="border px-3 py-3 rounded resize-none space-y-3">
-      <TextArea
-        defaultValue={query}
-        disabled={result !== undefined}
-        onChange={onChange}
-        onKeyPress={onKeyPress}
-        placeholder={props.placeholder}
-        ref={textAreaRef}
-        rows={1}
-      />
-      {button}
-      {table}
-    </div>
+    <Card>
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{ display: "flex" }}
+      >
+        <TextArea
+          autoSize
+          defaultValue={query}
+          disabled={result !== undefined}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
+          placeholder={props.placeholder}
+          ref={textAreaRef}
+        />
+        {button}
+        {table}
+      </Space>
+    </Card>
   );
 };
 

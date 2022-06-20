@@ -3,7 +3,7 @@
 ## Install
 
 ``` shell
-npm add OpenIQL/storybook
+pnpm add OpenIQL/storybook
 ```
 
 ## Development
@@ -11,5 +11,5 @@ npm add OpenIQL/storybook
 To run the Storybook type:
 
 ``` shell
-yarn storybook
+pnpm storybook
 ```
