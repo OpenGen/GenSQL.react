@@ -39,10 +39,10 @@ export const Query = (props) => {
   const queryButton = (<Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>);
   const resetButton = (<Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>);
 
-  const button = (result !== undefined) ? resetButton : queryButton;
+  const button = result ? resetButton : queryButton;
 
   var table;
-  if (result !== undefined) {
+  if (result) {
     const columns = tableColumns(result.columns);
     const dataSource = tableDataSource(result.data);
 
@@ -62,9 +62,9 @@ export const Query = (props) => {
   // Focus botton when gaining results, focus textarea when losing results.
   const previousResult = usePrevious(result);
   React.useEffect(() => {
-    if (result === undefined && previousResult !== undefined) {
+    if (!result && previousResult) {
       textAreaRef.current.focus({ cursor: "all" });
-    } else if (result !== undefined && previousResult === undefined) {
+    } else if (result && !previousResult) {
       buttonRef.current.focus();
     }
   }, [result, previousResult]);
