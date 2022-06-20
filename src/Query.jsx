@@ -14,18 +14,19 @@ export const Query = (props) => {
 
   const onChange = (event) => { setQuery(event.target.value); }
 
-  const execute = () => {
+  const handleExecute = () => {
     setResult(props.execute(query));
     setFocus(false);
     buttonRef.current.focus();
   };
-  const queryButton = (<Button type="primary" ref={buttonRef} onClick={execute}>Execute</Button>);
 
-  const reset = () => {
+  const handleReset = () => {
     setResult();
     setFocus(true);
   };
-  const resetButton = (<Button type="primary" ref={buttonRef} onClick={reset}>Reset</Button>);
+
+  const queryButton = (<Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>);
+  const resetButton = (<Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>);
 
   const button = (result !== undefined) ? resetButton : queryButton;
 
@@ -67,7 +68,7 @@ export const Query = (props) => {
 
   const onKeyPress = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
-      execute();
+      handleExecute();
     }
   };
 
