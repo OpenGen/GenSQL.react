@@ -1,4 +1,5 @@
-import '../stories/styles/tailwind.css';
+// import '../stories/styles/tailwind.css';
+import 'antd/dist/antd.css';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
