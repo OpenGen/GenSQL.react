@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Card, Form, Input, Space, Table } from 'antd';
+import { Button, Card, Form, Input, Table } from 'antd';
 
 const { TextArea } = Input;
 
