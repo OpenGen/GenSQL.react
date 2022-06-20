@@ -30,14 +30,6 @@ export const Query = (props) => {
 
   const button = (result !== undefined) ? resetButton : queryButton;
 
-  const sorter = (column) => (a, b) => {
-    if (typeof(a[column]) === "string" && typeof(b[column]) === "string") {
-      return a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0;
-    } else {
-      return a[column] - b[column];
-    }
-  }
-
   var table;
   if (result !== undefined) {
     const columns = result.columns.map((column, index) => {
@@ -45,7 +37,6 @@ export const Query = (props) => {
         title: column,
         dataIndex: column,
         key: index,
-        sorter: sorter(column)
       };
     });
     const dataSource = result.data.map((datum, index) => {
@@ -58,7 +49,6 @@ export const Query = (props) => {
         dataSource={dataSource}
         pagination={false}
         size="small"
-        sortDirections={["ascend", "descend"]}
         style={{ marginTop: 24 }}
         tableLayout="auto"
       />
