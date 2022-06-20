@@ -4,6 +4,18 @@ import { Button, Card, Form, Input, Table } from 'antd';
 
 const { TextArea } = Input;
 
+const tableColumns = (columns) => (
+  columns.map((column, index) => ({
+    title: column,
+    dataIndex: column,
+    key: index,
+  }))
+);
+
+const tableDataSource = (data) => (
+  data.map((datum, index) => ({ key: index, ...datum }))
+);
+
 export const Query = (props) => {
   const [query, setQuery] = React.useState(props.value);
   const [result, setResult] = React.useState();
@@ -32,17 +44,8 @@ export const Query = (props) => {
 
   var table;
   if (result !== undefined) {
-    const columns = result.columns.map((column, index) => {
-      return {
-        title: column,
-        dataIndex: column,
-        key: index,
-      };
-    });
-
-    const dataSource = result.data.map((datum, index) => {
-      return { key: index, ...datum };
-    });
+    const columns = tableColumns(result.columns);
+    const dataSource = tableDataSource(result.data);
 
     table = (
       <Table
