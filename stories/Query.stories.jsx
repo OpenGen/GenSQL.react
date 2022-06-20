@@ -10,7 +10,7 @@ export default {
 
 const Template = (args) => <Query {...args} />;
 
-const execute =  (_s) => {
+const execute = (_s) => {
   return {
     columns: ["name", "age", "color"],
     data: [
