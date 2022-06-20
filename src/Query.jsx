@@ -16,26 +16,25 @@ const tableDataSource = (data) => (
   data.map((datum, index) => ({ key: index, ...datum }))
 );
 
+const usePrevious = (value) => {
+  const ref = React.useRef();
+  React.useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 export const Query = (props) => {
   const [query, setQuery] = React.useState(props.value);
   const [result, setResult] = React.useState();
-  const [focus, setFocus] = React.useState(undefined);
 
   const buttonRef = React.useRef();
   const textAreaRef = React.useRef();
 
   const onChange = (event) => { setQuery(event.target.value); }
 
-  const handleExecute = () => {
-    setResult(props.execute(query));
-    setFocus(false);
-    buttonRef.current.focus();
-  };
-
-  const handleReset = () => {
-    setResult();
-    setFocus(true);
-  };
+  const handleExecute = () => { setResult(props.execute(query)); };
+  const handleReset = () => { setResult(); };
 
   const queryButton = (<Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>);
   const resetButton = (<Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>);
@@ -60,14 +59,15 @@ export const Query = (props) => {
     );
   }
 
+  // Focus botton when gaining results, focus textarea when losing results.
+  const previousResult = usePrevious(result);
   React.useEffect(() => {
-    if (textAreaRef.current && focus) {
-      textAreaRef.current.focus({
-        cursor: 'all',
-      });
-      setFocus(false);
+    if (result === undefined && previousResult !== undefined) {
+      textAreaRef.current.focus({ cursor: "all" });
+    } else if (result !== undefined && previousResult === undefined) {
+      buttonRef.current.focus();
     }
-  }, []);
+  }, [result, previousResult]);
 
   const onKeyPress = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
