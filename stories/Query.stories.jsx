@@ -24,7 +24,7 @@ const execute =  (_s) => {
 export const Placeholder = Template.bind({});
 Placeholder.args = {
   execute: execute,
-  placeholder: "SELECT * FROM data",
+  placeholder: "Enter a query",
 };
 
 export const Value = Template.bind({});
