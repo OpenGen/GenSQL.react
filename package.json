@@ -2,7 +2,9 @@
   "name": "@openiql/inferenceql-components",
   "version": "0.0.1-alpha",
   "dependencies": {
-    "antd": "^4.21.3"
+    "@mantine/core": "^4.2.10",
+    "@mantine/hooks": "^4.2.10",
+    "tabler-icons-react": "^1.50.0"
   },
   "peerDependencies": {
     "prop-types": "^15.8.1",
