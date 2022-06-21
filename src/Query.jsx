@@ -1,18 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Card, Form, Input, Table } from 'antd';
-
-const tableColumns = (columns) => (
-  columns.map((column, index) => ({
-    title: column,
-    dataIndex: column,
-    key: index,
-  }))
-);
-
-const tableDataSource = (data) => (
-  data.map((datum, index) => ({ key: index, ...datum }))
-);
+import { Button, Paper, Space, Textarea } from '@mantine/core';
+import { DataTable } from './DataTable';
+import { ArrowBackUp, Database } from 'tabler-icons-react';
+import { useInputState } from '@mantine/hooks';
 
 const usePrevious = (value) => {
   const ref = React.useRef();
@@ -23,13 +14,13 @@ const usePrevious = (value) => {
 }
 
 export const Query = (props) => {
-  const [query, setQuery] = React.useState(props.initialQuery);
+  const [queryValue, setQueryValue] = useInputState(props.initialQuery || "");
   const [queryResult, setQueryResult] = React.useState();
 
   const buttonRef = React.useRef();
   const textAreaRef = React.useRef();
 
-  const handleExecute = () => { setQueryResult(props.execute(query)); };
+  const handleExecute = () => { setQueryResult(props.execute(queryValue)); };
   const handleReset = () => { setQueryResult(); };
 
   const onKeyPress = (event) => {
@@ -48,36 +39,33 @@ export const Query = (props) => {
   }, [queryResult, previousQueryResult]);
 
   return (
-    <Card>
-      <Form layout="horizontal">
-        <Form.Item>
-          <Input.TextArea
-            autoSize
-            defaultValue={query}
-            disabled={queryResult !== undefined}
-            onChange={(event) => setQuery(event.target.value)}
-            onKeyPress={onKeyPress}
-            placeholder={props.placeholder}
-            ref={textAreaRef}
-          />
-        </Form.Item>
-        <Form.Item style={{ marginBottom: 0}}>
-          {queryResult
-           ? <Button type="primary" ref={buttonRef} onClick={handleReset}>Reset</Button>
-           : <Button type="primary" ref={buttonRef} onClick={handleExecute}>Execute</Button>}
-        </Form.Item>
-      </Form>
+    <Paper
+      p="sm"
+      radius="sm"
+      shadow="md"
+      withBorder
+    >
+      <Textarea
+        autosize
+        disabled={queryResult !== undefined}
+        onChange={setQueryValue}
+        onKeyPress={onKeyPress}
+        placeholder={props.placeholder}
+        ref={textAreaRef}
+        styles={{input: {fontFamily: "monospace"}}}
+        value={queryValue}
+      />
+      {queryResult
+       ? <Button leftIcon={<ArrowBackUp/>} mt="md" ref={buttonRef} variant="default" onClick={handleReset}>Reset</Button>
+       : <Button leftIcon={<Database/>} mt="md" ref={buttonRef} variant="default" onClick={handleExecute}>Execute</Button>}
+      {queryResult && <Space h="md" />}
       {queryResult &&
-       <Table
-         bordered
-         columns={tableColumns(queryResult.columns)}
-         dataSource={tableDataSource(queryResult.data)}
+       <DataTable
+         columns={queryResult.columns}
          pagination={false}
-         size="small"
-         style={{ display: "inline-block", marginTop: 24 }}
-         tableLayout="auto"
+         rows={queryResult.data}
        />}
-    </Card>
+    </Paper>
   );
 };
 

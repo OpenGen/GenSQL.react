@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from '../src/Query';
 
 export default {
-  title: 'Example/Query',
+  title: 'Query',
   component: Query,
   argTypes: {
   },
@@ -19,7 +19,7 @@ const execute = (_s) => {
       {name: "Zelda", age: 13, color: "black"},
     ]
   }
-}
+};
 
 export const Placeholder = Template.bind({});
 Placeholder.args = {
