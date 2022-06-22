@@ -16,13 +16,22 @@ specifiers:
   '@storybook/preset-ant-design': ^0.0.2
   '@storybook/react': ^6.5.9
   '@storybook/testing-library': ^0.0.13
+  '@types/prismjs': ^1.26.0
   babel-loader: ^8.2.5
+  babel-plugin-prismjs: ^2.1.0
+  prism-react-renderer: ^1.3.3
+  prismjs: ^1.28.0
   tabler-icons-react: ^1.50.0
+  use-editable: ^2.3.3
 
 dependencies:
   '@mantine/core': 4.2.10_a2hiaactx56oivxb3nkomat7fy
   '@mantine/hooks': 4.2.10_react@17.0.2
+  babel-plugin-prismjs: 2.1.0_prismjs@1.28.0
+  prism-react-renderer: 1.3.3_react@17.0.2
+  prismjs: 1.28.0
   tabler-icons-react: 1.50.0_react@17.0.2
+  use-editable: 2.3.3_react@17.0.2
 
 devDependencies:
   '@babel/cli': 7.17.10_@babel+core@7.18.5
@@ -38,6 +47,7 @@ devDependencies:
   '@storybook/preset-ant-design': 0.0.2_hlh4pcllrqjssptawbzr5dlb3a
   '@storybook/react': 6.5.9_6qok2s3opbpiothrskzmgz3hvu
   '@storybook/testing-library': 0.0.13_sfoxds7t5ydpegc3knd667wn6m
+  '@types/prismjs': 1.26.0
   babel-loader: 8.2.5_p4a4vpdmvzvrx3lnpkqvj5nmla
 
 packages:
@@ -3498,6 +3508,10 @@ packages:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}
     dev: true
 
+  /@types/prismjs/1.26.0:
+    resolution: {integrity: sha512-ZTaqn/qSqUuAq1YwvOFQfVW1AR/oQJlLSZVustdjwI+GZ8kr0MSHBj0tsXPW1EqHubx50gtBEjbPGsdZwQwCjQ==}
+    dev: true
+
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
 
@@ -4309,6 +4323,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /babel-plugin-prismjs/2.1.0_prismjs@1.28.0:
+    resolution: {integrity: sha512-ehzSKYfeAz4U78zi/sfwsjDPlq0LvDKxNefcZTJ/iKBu+plsHsLqZhUeGf1+82LAcA35UZGbU6ksEx2Utphc/g==}
+    peerDependencies:
+      prismjs: ^1.18.0
+    dependencies:
+      prismjs: 1.28.0
+    dev: false
 
   /babel-plugin-react-docgen/4.2.1:
     resolution: {integrity: sha512-UQ0NmGHj/HAqi5Bew8WvNfCk8wSsmdgNd8ZdMjBCICtyCJCq9LiqgqvjCYe570/Wg7AQArSq1VQ60Dd/CHN7mQ==}
@@ -8838,6 +8860,14 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
+  /prism-react-renderer/1.3.3_react@17.0.2:
+    resolution: {integrity: sha512-Viur/7tBTCH2HmYzwCHmt2rEFn+rdIWNIINXyg0StiISbDiIhHKhrFuEK8eMkKgvsIYSjgGqy/hNyucHp6FpoQ==}
+    peerDependencies:
+      react: '>=0.14.9'
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /prismjs/1.27.0:
     resolution: {integrity: sha512-t13BGPUlFDR7wRB5kQDG4jjl7XeuH6jbJGt11JHPL96qwsEHNX2+68tFXqc1/k+/jALsbSWJKUOT/hcYAZ5LkA==}
     engines: {node: '>=6'}
@@ -8846,7 +8876,6 @@ packages:
   /prismjs/1.28.0:
     resolution: {integrity: sha512-8aaXdYvl1F7iC7Xm1spqSaY/OJBpYW3v+KJ+F17iYxvdc8sfjW194COK5wVhMZX45tGteiBQgdvD/nhxcRwylw==}
     engines: {node: '>=6'}
-    dev: true
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -10654,6 +10683,14 @@ packages:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 17.0.2
+    dev: false
+
+  /use-editable/2.3.3_react@17.0.2:
+    resolution: {integrity: sha512-7wVD2JbfAFJ3DK0vITvXBdpd9JAz5BcKAAolsnLBuBn6UDDwBGuCIAGvR3yA2BNKm578vAMVHFCWaOcA+BhhiA==}
+    peerDependencies:
+      react: '>= 16.8.0'
     dependencies:
       react: 17.0.2
     dev: false

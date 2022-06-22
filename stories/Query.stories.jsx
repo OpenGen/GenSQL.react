@@ -21,14 +21,13 @@ const execute = (_s) => {
   }
 };
 
-export const Placeholder = Template.bind({});
-Placeholder.args = {
+export const Empty = Template.bind({});
+Empty.args = {
   execute: execute,
-  placeholder: "Enter a query",
 };
 
-export const Value = Template.bind({});
-Value.args = {
+export const Populated = Template.bind({});
+Populated.args = {
   execute: execute,
   initialQuery: "SELECT * FROM data",
 };
