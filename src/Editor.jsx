@@ -1,11 +1,12 @@
 import Highlight, { defaultProps } from "prism-react-renderer";
 import PropTypes from 'prop-types';
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import github from 'prism-react-renderer/themes/github';
 import { Code } from '@mantine/core';
 import { useEditable } from "use-editable";
 
-export const Editor = React.forwardRef(({code, disabled, onKeyDown, setCode }, ref) => {
+export const Editor = React.forwardRef(({code, disabled, setCode, ...props }, forwardedRef) => {
+  const ref = forwardedRef ?? useRef();
   const onChange = useCallback((code) => {
     // https://github.com/FormidableLabs/use-editable/issues/8#issuecomment-817390829
     setCode(code.slice(0, -1));
@@ -15,6 +16,14 @@ export const Editor = React.forwardRef(({code, disabled, onKeyDown, setCode }, r
     disabled: disabled,
     indentation: 2
   });
+
+  const onKeyDown = (event, ...params) => {
+    if (props.onKeyDown) props.onKeyDown(event, ...params);
+    if (event.key === "Backspace" && event.altKey) {
+      // Without this only one character is deleted.
+      event.stopPropagation();
+    }
+  }
 
   return (
     <Highlight {...defaultProps} theme={github} code={code} language="sql">
