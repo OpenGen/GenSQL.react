@@ -1,3 +1,11 @@
 {
+  "plugins": [
+    ["prismjs", {
+      "languages": ["sql"],
+      "plugins": [],
+      "theme": "default",
+      "css": true
+    }]
+  ],
   "presets": ["@babel/preset-react", "@babel/preset-env"]
 }

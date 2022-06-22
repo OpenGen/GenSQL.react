@@ -1,9 +1,9 @@
+import { Editor } from "./Editor";
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Paper, Space, Textarea } from '@mantine/core';
-import { DataTable } from './DataTable';
 import { ArrowBackUp, Database } from 'tabler-icons-react';
-import { useInputState } from '@mantine/hooks';
+import { Button, Paper, Space } from '@mantine/core';
+import { DataTable } from './DataTable';
 
 const usePrevious = (value) => {
   const ref = React.useRef();
@@ -14,17 +14,18 @@ const usePrevious = (value) => {
 }
 
 export const Query = (props) => {
-  const [queryValue, setQueryValue] = useInputState(props.initialQuery || "");
+  const [queryValue, setQueryValue] = React.useState(props.initialQuery || "");
   const [queryResult, setQueryResult] = React.useState();
 
   const buttonRef = React.useRef();
-  const textAreaRef = React.useRef();
+  const editorRef = React.useRef();
 
   const handleExecute = () => { setQueryResult(props.execute(queryValue)); };
   const handleReset = () => { setQueryResult(); };
 
-  const onKeyPress = (event) => {
+  const onKeyDown = (event) => {
     if (event.key === "Enter" && event.shiftKey) {
+      event.stopPropagation();
       handleExecute();
     }
   };
@@ -32,7 +33,7 @@ export const Query = (props) => {
   const previousQueryResult = usePrevious(queryResult);
   React.useEffect(() => {
     if (!queryResult && previousQueryResult) {
-      textAreaRef.current.focus({ cursor: "all" });
+      editorRef.current.focus();
     } else if (queryResult && !previousQueryResult) {
       buttonRef.current.focus();
     }
@@ -45,15 +46,12 @@ export const Query = (props) => {
       shadow="md"
       withBorder
     >
-      <Textarea
-        autosize
-        disabled={queryResult !== undefined}
-        onChange={setQueryValue}
-        onKeyPress={onKeyPress}
-        placeholder={props.placeholder}
-        ref={textAreaRef}
-        styles={{input: {fontFamily: "monospace"}}}
-        value={queryValue}
+      <Editor
+        code={queryValue}
+        disabled={Boolean(queryResult)}
+        onKeyDown={onKeyDown}
+        ref={editorRef}
+        setCode={setQueryValue}
       />
       {queryResult
        ? <Button leftIcon={<ArrowBackUp/>} mt="md" ref={buttonRef} variant="default" onClick={handleReset}>Reset</Button>
