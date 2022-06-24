@@ -30,7 +30,7 @@ const violet = "#842879";
 const cyan = "#398EAC";
 const darkCyan = "#2C7088";
 
-export const theme = {
+export default {
   plain: {
     color: fg,
     backgroundColor: bg,
