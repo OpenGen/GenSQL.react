@@ -31,7 +31,7 @@
     "build-storybook": "build-storybook",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "prepublish": "tsc --build",
+    "postinstall": "tsc --build",
     "storybook": "start-storybook -p 6006"
   },
   "files": [
