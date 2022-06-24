@@ -29,6 +29,7 @@
   },
   "scripts": {
     "build-storybook": "build-storybook",
+    "prepack": "tsc",
     "prepare": "tsc",
     "storybook": "start-storybook -p 6006"
   },
