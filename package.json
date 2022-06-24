@@ -15,10 +15,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2",
-    "@babel/preset-react": "^7.17.12",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",
@@ -29,16 +25,14 @@
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
     "@types/prismjs": "^1.26.0",
-    "babel-loader": "^8.2.5",
-    "babel-plugin-prismjs": "^2.1.0"
+    "typescript": "^4.7.4"
   },
   "scripts": {
     "build-storybook": "build-storybook",
-    "prepack": "babel src --out-dir lib",
-    "prepare": "babel src --out-dir lib",
+    "prepare": "tsc",
     "storybook": "start-storybook -p 6006"
   },
   "files": [
-    "./lib/**/*.js"
+    "./dist"
   ]
 }
