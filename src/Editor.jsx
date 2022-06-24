@@ -11,8 +11,9 @@ import { useEditable } from "use-editable";
 
 const builtins = [
   "(APPROXIMATE\\s+)?MUTUAL\\s+INFORMATION\\s+OF",
-  "PROBABILITY(\\s+DENSITY)?\\s+OF",
   "(CONDITIONED|CONSTRAINED)\\s+BY",
+  "PROBABILITY(\\s+DENSITY)?\\s+OF",
+  "UNDER",
 ];
 
 const keywords = [
@@ -38,7 +39,6 @@ const keywords = [
   "ORDER\\s+BY",
   "SELECT",
   "SET",
-  "UNDER",
   "UPDATE",
   "VALUES",
   "VAR",
