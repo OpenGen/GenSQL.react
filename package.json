@@ -1,5 +1,5 @@
 {
-  "name": "@openiql/inferenceql-components",
+  "name": "@openiql/components",
   "version": "0.0.1-alpha",
   "dependencies": {
     "@mantine/core": "^4.2.10",
