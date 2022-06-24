@@ -1,10 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@babel/cli': ^7.17.10
-  '@babel/core': ^7.18.5
-  '@babel/preset-env': ^7.18.2
-  '@babel/preset-react': ^7.17.12
   '@mantine/core': ^4.2.10
   '@mantine/hooks': ^4.2.10
   '@storybook/addon-actions': ^6.5.9
@@ -17,27 +13,21 @@ specifiers:
   '@storybook/react': ^6.5.9
   '@storybook/testing-library': ^0.0.13
   '@types/prismjs': ^1.26.0
-  babel-loader: ^8.2.5
-  babel-plugin-prismjs: ^2.1.0
   prism-react-renderer: ^1.3.3
   prismjs: ^1.28.0
   tabler-icons-react: ^1.50.0
+  typescript: ^4.7.4
   use-editable: ^2.3.3
 
 dependencies:
   '@mantine/core': 4.2.10_a2hiaactx56oivxb3nkomat7fy
   '@mantine/hooks': 4.2.10_react@17.0.2
-  babel-plugin-prismjs: 2.1.0_prismjs@1.28.0
   prism-react-renderer: 1.3.3_react@17.0.2
   prismjs: 1.28.0
   tabler-icons-react: 1.50.0_react@17.0.2
   use-editable: 2.3.3_react@17.0.2
 
 devDependencies:
-  '@babel/cli': 7.17.10_@babel+core@7.18.5
-  '@babel/core': 7.18.5
-  '@babel/preset-env': 7.18.2_@babel+core@7.18.5
-  '@babel/preset-react': 7.17.12_@babel+core@7.18.5
   '@storybook/addon-actions': 6.5.9_sfoxds7t5ydpegc3knd667wn6m
   '@storybook/addon-essentials': 6.5.9_i25fiq4vnbpob5qunymhmtotoi
   '@storybook/addon-interactions': 6.5.9_bnwc37cmpz3lvayt4q3yifwg5q
@@ -48,7 +38,7 @@ devDependencies:
   '@storybook/react': 6.5.9_6qok2s3opbpiothrskzmgz3hvu
   '@storybook/testing-library': 0.0.13_sfoxds7t5ydpegc3knd667wn6m
   '@types/prismjs': 1.26.0
-  babel-loader: 8.2.5_p4a4vpdmvzvrx3lnpkqvj5nmla
+  typescript: 4.7.4
 
 packages:
 
@@ -58,26 +48,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.13
-
-  /@babel/cli/7.17.10_@babel+core@7.18.5:
-    resolution: {integrity: sha512-OygVO1M2J4yPMNOW9pb+I6kFGpQK77HmG44Oz3hg8xQIl5L/2zq+ZohwAdSaqYgVwM0SfmPHZHphH4wR8qzVYw==}
-    engines: {node: '>=6.9.0'}
-    hasBin: true
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.18.5
-      '@jridgewell/trace-mapping': 0.3.13
-      commander: 4.1.1
-      convert-source-map: 1.8.0
-      fs-readdir-recursive: 1.1.0
-      glob: 7.2.3
-      make-dir: 2.1.0
-      slash: 2.0.0
-    optionalDependencies:
-      '@nicolo-ribaudo/chokidar-2': 2.1.8-no-fsevents.3
-      chokidar: 3.5.3
-    dev: true
 
   /@babel/code-frame/7.16.7:
     resolution: {integrity: sha512-iAXqUn8IIeBTNd72xsFlgaXHkMBMt6y4HJp1tIaK465CWLT/fG1aqB7ykr95gHHmlBdGbFeWWfyB4NJJ0nmeIg==}
@@ -1847,12 +1817,6 @@ packages:
       call-me-maybe: 1.0.1
       glob-to-regexp: 0.3.0
     dev: true
-
-  /@nicolo-ribaudo/chokidar-2/2.1.8-no-fsevents.3:
-    resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4324,14 +4288,6 @@ packages:
       - supports-color
     dev: true
 
-  /babel-plugin-prismjs/2.1.0_prismjs@1.28.0:
-    resolution: {integrity: sha512-ehzSKYfeAz4U78zi/sfwsjDPlq0LvDKxNefcZTJ/iKBu+plsHsLqZhUeGf1+82LAcA35UZGbU6ksEx2Utphc/g==}
-    peerDependencies:
-      prismjs: ^1.18.0
-    dependencies:
-      prismjs: 1.28.0
-    dev: false
-
   /babel-plugin-react-docgen/4.2.1:
     resolution: {integrity: sha512-UQ0NmGHj/HAqi5Bew8WvNfCk8wSsmdgNd8ZdMjBCICtyCJCq9LiqgqvjCYe570/Wg7AQArSq1VQ60Dd/CHN7mQ==}
     dependencies:
@@ -6258,10 +6214,6 @@ packages:
 
   /fs-monkey/1.0.3:
     resolution: {integrity: sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==}
-    dev: true
-
-  /fs-readdir-recursive/1.1.0:
-    resolution: {integrity: sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==}
     dev: true
 
   /fs-write-stream-atomic/1.0.10:
