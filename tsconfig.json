@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
+    "jsx": "react",
     "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true
