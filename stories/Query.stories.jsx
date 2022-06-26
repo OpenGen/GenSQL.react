@@ -13,7 +13,7 @@ const Template = (args) => <Query {...args} />;
 const execute = (_s) => {
   return {
     columns: ["name", "age", "color"],
-    data: [
+    rows: [
       {name: "Disco", age: 16, color: "brown"},
       {name: "Henry", age: 14, color: "orange"},
       {name: "Zelda", age: 13, color: "black"},
