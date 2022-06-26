@@ -61,7 +61,7 @@ export const Query = (props) => {
        <DataTable
          columns={queryResult.columns}
          pagination={false}
-         rows={queryResult.data}
+         rows={queryResult.rows}
        />}
     </Paper>
   );
