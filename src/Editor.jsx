@@ -12,6 +12,8 @@ import { useEditable } from "use-editable";
 const builtins = [
   "(APPROXIMATE\\s+)?MUTUAL\\s+INFORMATION\\s+OF",
   "(CONDITIONED|CONSTRAINED)\\s+BY",
+  "GENERATE",
+  "GIVEN",
   "PROBABILITY(\\s+DENSITY)?\\s+OF",
   "UNDER",
 ];
@@ -25,8 +27,6 @@ const keywords = [
   "DISTINCT",
   "EXISTS",
   "FROM",
-  "GENERATE",
-  "GIVEN",
   "GROUP\\s+BY",
   "IF",
   "INCORPORATE",
