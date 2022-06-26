@@ -1,14 +1,21 @@
 const path = require('path');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: false,
   entry: [
     path.resolve(__dirname, 'dist', 'main.js')
   ],
   externals: {
-    react: 'React',
-    reactDOM: 'ReactDOM'
+    react: {
+      root: 'React',
+      amd: 'react',
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      amd: 'react-dom',
+    }
   },
+  mode: 'production',
   module: {
     rules: [
       {
@@ -19,9 +26,9 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'components.amd.js',
     library: 'components',
-    libraryTarget: 'umd',
+    libraryTarget: 'amd',
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
