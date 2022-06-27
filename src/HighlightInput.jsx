@@ -106,6 +106,7 @@ const HighlightInput = React.forwardRef(
     return (
       <pre>
         <Code
+          className="hljs"
           onKeyDown={handleKeyDown}
           ref={ref}
           style={{
