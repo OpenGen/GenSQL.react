@@ -20,8 +20,12 @@ export default function Query({ execute, initialQuery }) {
   const buttonRef = React.useRef();
   const editorRef = React.useRef();
 
-  const handleExecute = () => { setQueryResult(execute(queryValue)); };
-  const handleReset = () => { setQueryResult(); };
+  const handleExecute = () => {
+    setQueryResult(execute(queryValue));
+  };
+  const handleReset = () => {
+    setQueryResult();
+  };
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter' && event.shiftKey) {
@@ -40,12 +44,7 @@ export default function Query({ execute, initialQuery }) {
   }, [queryResult, previousQueryResult]);
 
   return (
-    <Paper
-      p="sm"
-      radius="sm"
-      shadow="md"
-      withBorder
-    >
+    <Paper p="sm" radius="sm" shadow="md" withBorder>
       <Editor
         code={queryValue}
         disabled={Boolean(queryResult)}
@@ -53,18 +52,35 @@ export default function Query({ execute, initialQuery }) {
         ref={editorRef}
         setCode={setQueryValue}
       />
-      {queryResult
-        ? <Button leftIcon={<ArrowBackUp />} mt="md" ref={buttonRef} variant="default" onClick={handleReset}>Reset</Button>
-        : <Button leftIcon={<Database />} mt="md" ref={buttonRef} variant="default" onClick={handleExecute}>Execute</Button>}
+      {queryResult ? (
+        <Button
+          leftIcon={<ArrowBackUp />}
+          mt="md"
+          ref={buttonRef}
+          variant="default"
+          onClick={handleReset}
+        >
+          Reset
+        </Button>
+      ) : (
+        <Button
+          leftIcon={<Database />}
+          mt="md"
+          ref={buttonRef}
+          variant="default"
+          onClick={handleExecute}
+        >
+          Execute
+        </Button>
+      )}
       {queryResult && <Space h="md" />}
-      {queryResult
-       && (
-       <DataTable
-         columns={queryResult.columns}
-         pagination={false}
-         rows={queryResult.rows}
-       />
-       )}
+      {queryResult && (
+        <DataTable
+          columns={queryResult.columns}
+          pagination={false}
+          rows={queryResult.rows}
+        />
+      )}
     </Paper>
   );
 }

@@ -4,8 +4,7 @@ import Query from '../src/Query';
 export default {
   title: 'Query',
   component: Query,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 function Template(args) {
