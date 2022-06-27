@@ -12,11 +12,17 @@ export default function DataTable({ columns, rows }) {
   });
 
   /* eslint-disable react/no-array-index-key */
-  const trs = columns.map((column, index) => <th key={index}>{column}</th>);
+  const tr = (
+    <tr>
+      {columns.map((column, index) => (
+        <th key={index}>{column}</th>
+      ))}
+    </tr>
+  );
 
   return (
     <Table striped style={{ display: 'block' }}>
-      <thead>{trs}</thead>
+      <thead>{tr}</thead>
       <tbody>{tds}</tbody>
     </Table>
   );
