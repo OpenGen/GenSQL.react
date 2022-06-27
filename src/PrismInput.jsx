@@ -78,7 +78,7 @@ Prism.languages.iql = {
   operator: new RegExp(`[+\\-*\\/><=/>]|${operators.join('|')}\\b`, 'i'),
 };
 
-const Editor = React.forwardRef(
+const PrismInput = React.forwardRef(
   ({ code, disabled, setCode, ...props }, forwardedRef) => {
     const ref = forwardedRef ?? useRef();
     const onChange = useCallback(
@@ -119,8 +119,8 @@ const Editor = React.forwardRef(
             onKeyDown={onKeyDown}
             ref={ref}
             style={{
-              padding: '10px',
               display: 'block',
+              padding: '10px',
               whiteSpace: 'pre-wrap',
               ...style,
             }}
@@ -146,18 +146,18 @@ const Editor = React.forwardRef(
   }
 );
 
-Editor.displayName = 'Editor';
+PrismInput.displayName = 'PrismInput';
 
-export default Editor;
+export default PrismInput;
 
-Editor.propTypes = {
+PrismInput.propTypes = {
   code: PropTypes.string,
   disabled: PropTypes.bool,
   onKeyDown: PropTypes.func,
   setCode: PropTypes.func.isRequired,
 };
 
-Editor.defaultProps = {
+PrismInput.defaultProps = {
   code: '',
   disabled: false,
   onKeyDown: undefined,

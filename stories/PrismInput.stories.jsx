@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import Editor from '../src/Editor';
+import PrismInput from '../src/PrismInput';
 
 export default {
-  title: 'Editor',
-  component: Editor,
+  title: 'PrismInput',
+  component: PrismInput,
   argTypes: {},
 };
 
 function Template({ code, disabled, onKeyDown }) {
   const [codeValue, setCode] = useState(code);
   return (
-    <Editor
+    <PrismInput
       code={codeValue}
       disabled={disabled}
       onKeyDown={onKeyDown}
@@ -19,8 +19,8 @@ function Template({ code, disabled, onKeyDown }) {
   );
 }
 
-Template.propTypes = Editor.propTypes;
-Template.defaultProps = Editor.defaultProps;
+Template.propTypes = PrismInput.propTypes;
+Template.defaultProps = PrismInput.defaultProps;
 
 export const Empty = Template.bind({});
 Empty.args = {
