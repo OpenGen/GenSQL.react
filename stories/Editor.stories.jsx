@@ -4,15 +4,12 @@ import Editor from '../src/Editor';
 export default {
   title: 'Editor',
   component: Editor,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 function Template({ code }) {
   const [codeValue, setCode] = useState(code);
-  return (
-    <Editor code={codeValue} setCode={setCode} />
-  );
+  return <Editor code={codeValue} setCode={setCode} />;
 }
 
 Template.propTypes = Editor.propTypes;

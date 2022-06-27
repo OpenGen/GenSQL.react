@@ -2,9 +2,7 @@ const path = require('path');
 
 module.exports = {
   devtool: false,
-  entry: [
-    path.resolve(__dirname, 'dist', 'main.js')
-  ],
+  entry: [path.resolve(__dirname, 'dist', 'main.js')],
   externals: {
     react: {
       root: 'React',
@@ -13,7 +11,7 @@ module.exports = {
     'react-dom': {
       root: 'ReactDOM',
       amd: 'react-dom',
-    }
+    },
   },
   mode: 'production',
   module: {

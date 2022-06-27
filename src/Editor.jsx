@@ -46,24 +46,13 @@ const keywords = [
   'WITH',
 ];
 
-const functions = [
-  'AVG',
-  'COUNT',
-  'MAX',
-  'MIN',
-  'MEDIAN',
-  'STD',
-];
+const functions = ['AVG', 'COUNT', 'MAX', 'MIN', 'MEDIAN', 'STD'];
 
 // FIXME: Operators have a different background.
 // https://github.com/PrismJS/prism/blob/e0ee93f138b7da294a28db50b97c22977fdfc8ed/themes/prism.css#L110
 // https://github.com/PrismJS/prism/pull/2309
 
-const operators = [
-  'AND',
-  'NOT',
-  'OR',
-];
+const operators = ['AND', 'NOT', 'OR'];
 
 // https://prismjs.com/tokens.html#standard-tokens
 
@@ -89,59 +78,70 @@ Prism.languages.iql = {
   operator: new RegExp(`[+\\-*\\/><=/>]|${operators.join('|')}\\b`, 'i'),
 };
 
-const Editor = React.forwardRef(({
-  code, disabled, setCode, ...props
-}, forwardedRef) => {
-  const ref = forwardedRef ?? useRef();
-  const onChange = useCallback((newCode) => {
-    // https://github.com/FormidableLabs/use-editable/issues/8#issuecomment-817390829
-    setCode(newCode.slice(0, -1));
-  }, [setCode]);
+const Editor = React.forwardRef(
+  ({ code, disabled, setCode, ...props }, forwardedRef) => {
+    const ref = forwardedRef ?? useRef();
+    const onChange = useCallback(
+      (newCode) => {
+        // https://github.com/FormidableLabs/use-editable/issues/8#issuecomment-817390829
+        setCode(newCode.slice(0, -1));
+      },
+      [setCode]
+    );
 
-  useEditable(ref, onChange, {
-    disabled,
-    indentation: 2,
-  });
+    useEditable(ref, onChange, {
+      disabled,
+      indentation: 2,
+    });
 
-  const onKeyDown = (event, ...params) => {
-    if (props.onKeyDown) props.onKeyDown(event, ...params);
-    if (event.key === 'Backspace' && event.altKey) {
-      // Without this only one character is deleted.
-      event.stopPropagation();
-    }
-  };
+    const onKeyDown = (event, ...params) => {
+      if (props.onKeyDown) props.onKeyDown(event, ...params);
+      if (event.key === 'Backspace' && event.altKey) {
+        // Without this only one character is deleted.
+        event.stopPropagation();
+      }
+    };
 
-  return (
-    // This component requires the use of the spreading operator to apply the
-    // default properties.
-    /* eslint-disable react/jsx-props-no-spreading */
-    <Highlight {...defaultProps} Prism={Prism} theme={theme} code={code} language="iql">
-      {({
-        className, style, tokens, getTokenProps,
-      }) => (
-        <Code
-          className={className}
-          onKeyDown={onKeyDown}
-          ref={ref}
-          style={{ padding: '10px', display: 'block', ...style }}
-        >
-          {tokens.map((line, i) => (
-            // Tokens is static and will not change.
-            /* eslint-disable react/no-array-index-key */
-            <React.Fragment key={i}>
-              {line
-                .filter((token) => !token.empty)
-                .map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
-                ))}
-              {'\n'}
-            </React.Fragment>
-          ))}
-        </Code>
-      )}
-    </Highlight>
-  );
-});
+    return (
+      // This component requires the use of the spreading operator to apply the
+      // default properties.
+      /* eslint-disable react/jsx-props-no-spreading */
+      <Highlight
+        {...defaultProps}
+        Prism={Prism}
+        theme={theme}
+        code={code}
+        language="iql"
+      >
+        {({ className, style, tokens, getTokenProps }) => (
+          <Code
+            className={className}
+            onKeyDown={onKeyDown}
+            ref={ref}
+            style={{ padding: '10px', display: 'block', ...style }}
+          >
+            {tokens.map((line, i) => (
+              // Tokens is static and will not change.
+              /* eslint-disable react/no-array-index-key */
+              <React.Fragment key={i}>
+                {line
+                  .filter((token) => !token.empty)
+                  .map((token, key) => (
+                    // Tokens is static and will not change.
+                    /* eslint-disable react/jsx-key */
+                    <span {...getTokenProps({ token, key })} />
+                  ))}
+                {'\n'}
+              </React.Fragment>
+            ))}
+          </Code>
+        )}
+      </Highlight>
+    );
+  }
+);
+
+Editor.displayName = 'Editor';
 
 export default Editor;
 

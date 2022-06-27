@@ -2,7 +2,7 @@
 
 ## Install
 
-``` shell
+```shell
 pnpm add OpenIQL/storybook
 ```
 
@@ -10,6 +10,6 @@ pnpm add OpenIQL/storybook
 
 To run the Storybook type:
 
-``` shell
+```shell
 pnpm storybook
 ```

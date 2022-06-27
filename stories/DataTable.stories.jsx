@@ -4,8 +4,7 @@ import DataTable from '../src/DataTable';
 export default {
   title: 'DataTable',
   component: DataTable,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 function Template(args) {
