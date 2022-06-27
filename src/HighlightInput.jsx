@@ -1,4 +1,4 @@
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/nord.css';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import hljs from 'highlight.js/lib/core';
@@ -109,7 +109,6 @@ const HighlightInput = React.forwardRef(
         onKeyDown={handleKeyDown}
         ref={ref}
         style={{
-          background: 'lightgrey',
           display: 'block',
           padding: '10px',
           whiteSpace: 'pre-wrap',
