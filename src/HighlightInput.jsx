@@ -104,20 +104,18 @@ const HighlightInput = React.forwardRef(
     const { value: innerHTML } = hljs.highlight(value, { language: 'iql' });
 
     return (
-      <pre>
-        <Code
-          className="hljs"
-          onKeyDown={handleKeyDown}
-          ref={ref}
-          style={{
-            background: 'lightgrey',
-            display: 'block',
-            padding: '10px',
-            whiteSpace: 'pre-wrap',
-          }}
-          dangerouslySetInnerHTML={{ __html: innerHTML }}
-        ></Code>
-      </pre>
+      <Code
+        className="hljs"
+        onKeyDown={handleKeyDown}
+        ref={ref}
+        style={{
+          background: 'lightgrey',
+          display: 'block',
+          padding: '10px',
+          whiteSpace: 'pre-wrap',
+        }}
+        dangerouslySetInnerHTML={{ __html: innerHTML }}
+      />
     );
   }
 );
