@@ -26,6 +26,7 @@ specifiers:
   eslint-plugin-react: ^7.28.0
   eslint-plugin-react-hooks: ^4.3.0
   git-format-staged: ^3.0.0
+  highlight.js: ^11.5.1
   husky: ^8.0.1
   prettier: 2.7.1
   prism-react-renderer: ^1.3.3
@@ -41,6 +42,7 @@ specifiers:
 dependencies:
   '@mantine/core': 4.2.10_hwrymh3op34mekd7bum74oixei
   '@mantine/hooks': 4.2.10_react@17.0.2
+  highlight.js: 11.5.1
   prism-react-renderer: 1.3.3_react@17.0.2
   prismjs: 1.28.0
   prop-types: 15.8.1
@@ -7185,6 +7187,11 @@ packages:
   /highlight.js/10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: true
+
+  /highlight.js/11.5.1:
+    resolution: {integrity: sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /hmac-drbg/1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}

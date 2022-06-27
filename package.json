@@ -4,6 +4,7 @@
   "dependencies": {
     "@mantine/core": "^4.2.10",
     "@mantine/hooks": "^4.2.10",
+    "highlight.js": "^11.5.1",
     "prism-react-renderer": "^1.3.3",
     "prismjs": "^1.28.0",
     "prop-types": "^15.8.1",
