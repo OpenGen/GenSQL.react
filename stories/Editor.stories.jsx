@@ -22,6 +22,11 @@ function Template({ code, disabled, onKeyDown }) {
 Template.propTypes = Editor.propTypes;
 Template.defaultProps = Editor.defaultProps;
 
+export const Empty = Template.bind({});
+Empty.args = {
+  code: '',
+};
+
 export const SingleLine = Template.bind({});
 SingleLine.args = {
   code: 'SELECT * FROM data;',
