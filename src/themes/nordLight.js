@@ -47,6 +47,7 @@ export default {
     { types: ['keyword'], style: { color: blue, fontWeight: 'bold' } },
     { types: ['number'], style: { color: magenta } },
     { types: ['operator'], style: { color: teal } },
+    { types: ['punctuation'], style: { color: grey } },
     { types: ['property'], style: { color: orange } },
     { types: ['string'], style: { color: green } },
     { types: ['symbol'], style: { color: violet } },
@@ -54,7 +55,6 @@ export default {
 
     // "class-name"
     // "important"
-    // "punctuation"
     // "regex"
     // "url"
 
