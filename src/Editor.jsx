@@ -118,7 +118,12 @@ const Editor = React.forwardRef(
             className={className}
             onKeyDown={onKeyDown}
             ref={ref}
-            style={{ padding: '10px', display: 'block', ...style }}
+            style={{
+              padding: '10px',
+              display: 'block',
+              whiteSpace: 'pre-wrap',
+              ...style,
+            }}
           >
             {tokens.map((line, i) => (
               // Tokens is static and will not change.

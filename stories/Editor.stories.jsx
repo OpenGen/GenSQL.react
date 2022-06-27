@@ -7,9 +7,16 @@ export default {
   argTypes: {},
 };
 
-function Template({ code }) {
+function Template({ code, disabled, onKeyDown }) {
   const [codeValue, setCode] = useState(code);
-  return <Editor code={codeValue} setCode={setCode} />;
+  return (
+    <Editor
+      code={codeValue}
+      disabled={disabled}
+      onKeyDown={onKeyDown}
+      setCode={setCode}
+    />
+  );
 }
 
 Template.propTypes = Editor.propTypes;
