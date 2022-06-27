@@ -7,14 +7,14 @@ export default {
   argTypes: {},
 };
 
-function Template({ code, disabled, onKeyDown }) {
-  const [codeValue, setCode] = useState(code);
+function Template({ value, disabled, onKeyDown }) {
+  const [valueState, setValue] = useState(value);
   return (
     <PrismInput
-      code={codeValue}
       disabled={disabled}
+      onChange={setValue}
       onKeyDown={onKeyDown}
-      setCode={setCode}
+      value={valueState}
     />
   );
 }
@@ -24,15 +24,15 @@ Template.defaultProps = PrismInput.defaultProps;
 
 export const Empty = Template.bind({});
 Empty.args = {
-  code: '',
+  value: '',
 };
 
 export const SingleLine = Template.bind({});
 SingleLine.args = {
-  code: 'SELECT * FROM data;',
+  value: 'SELECT * FROM data;',
 };
 
 export const MultiLine = Template.bind({});
 MultiLine.args = {
-  code: 'SELECT *\nFROM data\nWHERE x > 0;',
+  value: 'SELECT *\nFROM data\nWHERE x > 0;',
 };

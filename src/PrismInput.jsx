@@ -79,23 +79,21 @@ Prism.languages.iql = {
 };
 
 const PrismInput = React.forwardRef(
-  ({ code, disabled, setCode, ...props }, forwardedRef) => {
+  ({ disabled, indentation, onChange, onKeyDown, value }, forwardedRef) => {
     const ref = forwardedRef ?? useRef();
-    const onChange = useCallback(
+
+    const handleChange = useCallback(
       (newCode) => {
         // https://github.com/FormidableLabs/use-editable/issues/8#issuecomment-817390829
-        setCode(newCode.slice(0, -1));
+        onChange(newCode.slice(0, -1));
       },
-      [setCode]
+      [onChange]
     );
 
-    useEditable(ref, onChange, {
-      disabled,
-      indentation: 2,
-    });
+    useEditable(ref, handleChange, { disabled, indentation });
 
-    const onKeyDown = (event, ...params) => {
-      if (props.onKeyDown) props.onKeyDown(event, ...params);
+    const handleKeyDown = (event, ...params) => {
+      if (onKeyDown) onKeyDown(event, ...params);
       if (event.key === 'Backspace' && event.altKey) {
         // Without this only one character is deleted.
         event.stopPropagation();
@@ -110,13 +108,13 @@ const PrismInput = React.forwardRef(
         {...defaultProps}
         Prism={Prism}
         theme={theme}
-        code={code}
+        code={value}
         language="iql"
       >
         {({ className, style, tokens, getTokenProps }) => (
           <Code
             className={className}
-            onKeyDown={onKeyDown}
+            onKeyDown={handleKeyDown}
             ref={ref}
             style={{
               display: 'block',
@@ -151,14 +149,17 @@ PrismInput.displayName = 'PrismInput';
 export default PrismInput;
 
 PrismInput.propTypes = {
-  code: PropTypes.string,
   disabled: PropTypes.bool,
+  indentation: PropTypes.number,
+  onChange: PropTypes.func,
   onKeyDown: PropTypes.func,
-  setCode: PropTypes.func.isRequired,
+  value: PropTypes.string,
 };
 
 PrismInput.defaultProps = {
-  code: '',
   disabled: false,
+  indentation: 2,
+  onChange: undefined,
   onKeyDown: undefined,
+  value: '',
 };
