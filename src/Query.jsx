@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { ArrowBackUp, Database } from 'tabler-icons-react';
 import { Button, Paper, Space } from '@mantine/core';
-import PrismInput from './PrismInput';
+/* eslint-disable import/no-named-default */
+import { default as Input } from './HighlightInput';
+// import { default as Input } from './PrismInput';
 import DataTable from './DataTable';
 
 const usePrevious = (value) => {
@@ -45,12 +47,12 @@ export default function Query({ execute, initialQuery }) {
 
   return (
     <Paper p="sm" radius="sm" shadow="md" withBorder>
-      <PrismInput
-        code={queryValue}
+      <Input
         disabled={Boolean(queryResult)}
+        onChange={setQueryValue}
         onKeyDown={onKeyDown}
         ref={editorRef}
-        setCode={setQueryValue}
+        value={queryValue}
       />
       {queryResult ? (
         <Button
