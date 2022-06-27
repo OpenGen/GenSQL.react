@@ -50,6 +50,7 @@
     "build-storybook": "build-storybook",
     "clean": "tsc --build --clean",
     "format": "pnpm prettier --ignore-path .gitignore --write .",
+    "lint": "pnpm eslint --ignore-path .gitignore --ext .jsx --ext .js --ext .jsx --ext .ts --ext .tsx .",
     "postinstall": "tsc --build",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006"
