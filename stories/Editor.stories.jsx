@@ -22,7 +22,12 @@ function Template({ code, disabled, onKeyDown }) {
 Template.propTypes = Editor.propTypes;
 Template.defaultProps = Editor.defaultProps;
 
-export const Basic = Template.bind({});
-Basic.args = {
+export const SingleLine = Template.bind({});
+SingleLine.args = {
   code: 'SELECT * FROM data;',
+};
+
+export const MultiLine = Template.bind({});
+MultiLine.args = {
+  code: 'SELECT *\nFROM data\nWHERE x > 0;',
 };
