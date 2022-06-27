@@ -38,6 +38,8 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "git-format-staged": "^3.0.0",
+    "husky": "^8.0.1",
     "prettier": "2.7.1",
     "typescript": "^4.7.4",
     "webpack": "^5.73.0",
@@ -49,6 +51,7 @@
     "clean": "tsc --build --clean",
     "format": "pnpm prettier --ignore-path .gitignore --write .",
     "postinstall": "tsc --build",
+    "prepare": "husky install",
     "storybook": "start-storybook -p 6006"
   },
   "files": [
