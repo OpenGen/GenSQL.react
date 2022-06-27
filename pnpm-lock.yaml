@@ -25,6 +25,8 @@ specifiers:
   eslint-plugin-jsx-a11y: ^6.5.1
   eslint-plugin-react: ^7.28.0
   eslint-plugin-react-hooks: ^4.3.0
+  git-format-staged: ^3.0.0
+  husky: ^8.0.1
   prettier: 2.7.1
   prism-react-renderer: ^1.3.3
   prismjs: ^1.28.0
@@ -69,6 +71,8 @@ devDependencies:
   eslint-plugin-jsx-a11y: 6.6.0_eslint@8.18.0
   eslint-plugin-react: 7.30.1_eslint@8.18.0
   eslint-plugin-react-hooks: 4.6.0_eslint@8.18.0
+  git-format-staged: 3.0.0
+  husky: 8.0.1
   prettier: 2.7.1
   typescript: 4.7.4
   webpack: 5.73.0_webpack-cli@4.10.0
@@ -6890,6 +6894,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /git-format-staged/3.0.0:
+    resolution: {integrity: sha512-cdDJxV06qY8ucBsW/uIFR4PYN/kDHl43nG8yg+VPPaDeLAf8hEPhEIJTeJ+yRClxcDSpoTmDPiFZUoxFx1wPCg==}
+    hasBin: true
+    dev: true
+
   /github-slugger/1.4.0:
     resolution: {integrity: sha512-w0dzqw/nt51xMVmlaV1+JRzN+oCa1KfcgGEWhxUG16wbdA+Xnt/yoFO8Z8x/V82ZcZ0wy6ln9QDup5avbhiDhQ==}
     dev: true
@@ -7271,6 +7280,12 @@ packages:
   /human-signals/2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
+    dev: true
+
+  /husky/8.0.1:
+    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /iconv-lite/0.4.24:
