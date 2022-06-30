@@ -101,9 +101,6 @@ const PrismInput = React.forwardRef(
     };
 
     return (
-      // This component requires the use of the spreading operator to apply the
-      // default properties.
-      /* eslint-disable react/jsx-props-no-spreading */
       <Highlight
         {...defaultProps}
         Prism={Prism}

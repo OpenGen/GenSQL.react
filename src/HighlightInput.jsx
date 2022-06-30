@@ -1,8 +1,7 @@
-import 'highlight.js/styles/nord.css';
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import hljs from 'highlight.js/lib/core';
-import { Code } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 import { useEditable } from 'use-editable';
 
 const language = ({ regex }) => {
@@ -87,9 +86,50 @@ const language = ({ regex }) => {
 hljs.registerLanguage('iql', language);
 hljs.configure({ languages: ['iql', 'sql'] });
 
+const useStyles = createStyles((theme) => ({
+  pre: {
+    margin: 0,
+  },
+  code: {
+    '&[disabled]': {
+      background: theme.colors.gray[0],
+      cursor: 'not-allowed',
+    },
+    '&:focus-visible': {
+      borderColor: theme.colors.blue[6],
+    },
+    '&:empty': {
+      minHeight: '15px',
+    },
+    borderColor: theme.colors.gray[4],
+    borderRadius: theme.radius.sm,
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    display: 'block',
+    outlineStyle: 'none',
+    overflowX: 'auto',
+    padding: theme.spacing.xs,
+    whiteSpace: 'pre',
+  },
+}));
+
 const HighlightInput = React.forwardRef(
-  ({ disabled, indentation, onChange, onKeyDown, value }, forwardedRef) => {
+  (
+    {
+      className,
+      classNames,
+      disabled,
+      indentation,
+      onChange,
+      onKeyDown,
+      styles,
+      value,
+      ...rest
+    },
+    forwardedRef
+  ) => {
     const ref = forwardedRef ?? useRef();
+    const { classes, cx } = useStyles(undefined, { classNames, styles });
 
     useEditable(ref, onChange, { disabled, indentation });
 
@@ -103,19 +143,20 @@ const HighlightInput = React.forwardRef(
 
     const { value: innerHTML } = hljs.highlight(value, { language: 'iql' });
 
+    /* eslint-disable react/no-danger  */
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-      <Code
-        className="hljs"
-        onKeyDown={handleKeyDown}
-        ref={ref}
-        style={{
-          display: 'block',
-          overflowX: 'auto',
-          padding: '10px',
-          whiteSpace: 'pre',
-        }}
-        dangerouslySetInnerHTML={{ __html: innerHTML }}
-      />
+      <pre className={classes.pre}>
+        <code
+          className={cx(classes.code, className)}
+          disabled={disabled}
+          onKeyDown={handleKeyDown}
+          ref={ref}
+          style={{ whiteSpace: 'pre' }}
+          dangerouslySetInnerHTML={{ __html: innerHTML }}
+          {...rest}
+        />
+      </pre>
     );
   }
 );
@@ -123,17 +164,23 @@ HighlightInput.displayName = 'HighlightInput';
 export default HighlightInput;
 
 HighlightInput.propTypes = {
+  className: PropTypes.string,
+  classNames: PropTypes.object,
   disabled: PropTypes.bool,
   indentation: PropTypes.number,
   onChange: PropTypes.func,
   onKeyDown: PropTypes.func,
+  styles: PropTypes.object,
   value: PropTypes.string,
 };
 
 HighlightInput.defaultProps = {
+  className: undefined,
+  classNames: undefined,
   disabled: false,
   indentation: 2,
   onChange: undefined,
   onKeyDown: undefined,
+  styles: undefined,
   value: '',
 };

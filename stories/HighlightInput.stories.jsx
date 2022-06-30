@@ -1,3 +1,4 @@
+import 'highlight.js/styles/github.css';
 import React, { useState } from 'react';
 import HighlightInput from '../src/HighlightInput';
 
@@ -33,6 +34,12 @@ Empty.args = {
 
 export const SingleLine = Template.bind({});
 SingleLine.args = {
+  value: 'SELECT * FROM data;',
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
   value: 'SELECT * FROM data;',
 };
 
