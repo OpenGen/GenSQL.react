@@ -118,8 +118,9 @@ const PrismInput = React.forwardRef(
             ref={ref}
             style={{
               display: 'block',
+              overflowX: 'auto',
               padding: '10px',
-              whiteSpace: 'pre-wrap',
+              whiteSpace: 'pre',
               ...style,
             }}
           >
