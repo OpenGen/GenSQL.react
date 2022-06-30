@@ -15,5 +15,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/forbid-prop-types': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };
