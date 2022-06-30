@@ -110,8 +110,9 @@ const HighlightInput = React.forwardRef(
         ref={ref}
         style={{
           display: 'block',
+          overflowX: 'auto',
           padding: '10px',
-          whiteSpace: 'pre-wrap',
+          whiteSpace: 'pre',
         }}
         dangerouslySetInnerHTML={{ __html: innerHTML }}
       />
