@@ -14,6 +14,7 @@ specifiers:
   '@storybook/testing-library': ^0.0.13
   '@typescript-eslint/eslint-plugin': ^5.30.0
   '@typescript-eslint/parser': ^5.30.0
+  css-loader: ^6.7.1
   eslint: ^8.18.0
   eslint-config-airbnb: ^19.0.4
   eslint-config-prettier: ^8.5.0
@@ -29,6 +30,7 @@ specifiers:
   prismjs: ^1.28.0
   prop-types: ^15.8.1
   react-vega: ^7.6.0
+  style-loader: ^3.3.1
   tabler-icons-react: ^1.52.0
   ts-loader: ^9.3.1
   typescript: ^4.7.4
@@ -64,6 +66,7 @@ devDependencies:
   '@storybook/testing-library': 0.0.13_sfoxds7t5ydpegc3knd667wn6m
   '@typescript-eslint/eslint-plugin': 5.30.0_5mtqsiui4sk53pmkx7i7ue45wm
   '@typescript-eslint/parser': 5.30.0_b5e7v2qnwxfo6hmiq56u52mz3e
+  css-loader: 6.7.1_webpack@5.73.0
   eslint: 8.18.0
   eslint-config-airbnb: 19.0.4_egamsbadvc6ovgxe5yxurj2cai
   eslint-config-prettier: 8.5.0_eslint@8.18.0
@@ -74,6 +77,7 @@ devDependencies:
   git-format-staged: 3.0.0
   husky: 8.0.1
   prettier: 2.7.1
+  style-loader: 3.3.1_webpack@5.73.0
   typescript: 4.7.4
   webpack: 5.73.0_webpack-cli@4.10.0
   webpack-cli: 4.10.0_webpack@5.73.0
@@ -5483,6 +5487,23 @@ packages:
       postcss-modules-values: 4.0.0_postcss@8.4.14
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
+      semver: 7.3.7
+      webpack: 5.73.0_webpack-cli@4.10.0
+    dev: true
+
+  /css-loader/6.7.1_webpack@5.73.0:
+    resolution: {integrity: sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      icss-utils: 5.1.0_postcss@8.4.14
+      postcss: 8.4.14
+      postcss-modules-extract-imports: 3.0.0_postcss@8.4.14
+      postcss-modules-local-by-default: 4.0.0_postcss@8.4.14
+      postcss-modules-scope: 3.0.0_postcss@8.4.14
+      postcss-modules-values: 4.0.0_postcss@8.4.14
+      postcss-value-parser: 4.2.0
       semver: 7.3.7
       webpack: 5.73.0_webpack-cli@4.10.0
     dev: true
@@ -10949,6 +10970,15 @@ packages:
     dependencies:
       loader-utils: 2.0.2
       schema-utils: 3.1.1
+      webpack: 5.73.0_webpack-cli@4.10.0
+    dev: true
+
+  /style-loader/3.3.1_webpack@5.73.0:
+    resolution: {integrity: sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
       webpack: 5.73.0_webpack-cli@4.10.0
     dev: true
 
