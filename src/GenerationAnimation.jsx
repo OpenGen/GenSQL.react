@@ -1,22 +1,44 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Box, Slider } from '@mantine/core';
+import { Box, InputWrapper, Slider } from '@mantine/core';
 import { VegaLite } from 'react-vega';
 import PrismInput from './PrismInput';
 
-const categoricals = ['Purpose', 'Country_of_Operator'];
+function GenerateQuery({ columns, given, limit, model }) {
+  const format = (x) => (typeof x === 'string' ? `"${x}"` : x.toString());
 
-const categoricalList = categoricals.join(', ');
-const countAlias = `Count_${categoricals.join('_')}`;
+  const givenString = Object.entries(given)
+    .map(([column, value]) => `${column} = ${format(value)}`)
+    .join(' AND ');
 
-const spec = (n) => {
-  return {
+  const query = `SELECT * FROM
+  GENERATE ${columns.join(', ')}
+  UNDER ${model}
+  GIVEN ${givenString}
+LIMIT ${limit}`;
+
+  return <PrismInput disabled value={query} />;
+}
+
+GenerateQuery.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  given: PropTypes.object.isRequired,
+  limit: PropTypes.number.isRequired,
+  model: PropTypes.string,
+};
+
+GenerateQuery.defaultProps = {
+  model: 'baseline_model',
+};
+
+function AggregateBarChart({ columns, rows, maxShown }) {
+  const spec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     mark: 'bar',
     data: { name: 'table' },
     transform: [
       {
-        calculate: categoricals
+        calculate: columns
           .map((column) => `datum.${column}`)
           .join(" + ', ' + "),
         as: 'group',
@@ -30,78 +52,88 @@ const spec = (n) => {
         sort: [{ field: 'count', order: 'descending' }],
       },
       {
-        filter: `datum.tag_rank <= ${n}`,
+        filter: `datum.tag_rank <= ${maxShown}`,
       },
     ],
     encoding: {
       y: {
         field: 'group',
         sort: '-x',
-        title: categoricalList,
+        title: columns.join(', '),
       },
       x: {
         type: 'quantitative',
         field: 'count',
-        title: countAlias,
+        title: 'Count',
       },
     },
   };
+
+  return (
+    <Box mt="md">
+      <VegaLite actions={false} data={{ table: rows }} spec={spec} />
+    </Box>
+  );
+}
+
+AggregateBarChart.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  maxShown: PropTypes.number,
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const query = (limit) => {
-  return `SELECT COUNT(*) AS ${countAlias}, ${categoricalList} FROM
-  (SELECT * FROM
-    GENERATE ${categoricalList}
-    UNDER baseline_model
-    GIVEN Class_of_Orbit = "GEO" AND Dry_mass_kg = 500
-  LIMIT ${limit})
-GROUP BY Purpose, Country_of_Operator
-ORDER BY ${countAlias} DESC
-LIMIT 10`;
+AggregateBarChart.defaultProps = {
+  maxShown: 10,
 };
-export default function GenerationAnimation({ n, min, rows }) {
+
+export default function GenerationAnimation({
+  columns,
+  given,
+  maxShown,
+  minSamples,
+  rows,
+}) {
   const [limit, setLimit] = useState(1);
 
-  const limitedRows = rows.slice(0, limit);
-  const max = rows.length;
+  const maxSamples = rows.length;
 
   return (
     <>
-      <PrismInput mt="xl" disabled value={query(limit)} />
-      <Slider
-        max={max}
-        min={min}
-        marks={[
-          { value: min, label: min },
-          { value: max, label: max },
-        ]}
-        mb="md"
-        mt="md"
-        onChange={setLimit}
-      />
-      <Box mt="md">
-        <VegaLite
-          actions={false}
-          data={{ table: limitedRows }}
-          spec={spec(n)}
+      <InputWrapper
+        description="Choose the number of rows to be generated."
+        label="Number of rows"
+      >
+        <Slider
+          max={maxSamples}
+          min={minSamples}
+          marks={[
+            { value: minSamples, label: minSamples },
+            { value: maxSamples, label: maxSamples },
+          ]}
+          mb="xl"
+          mt="md"
+          onChange={setLimit}
         />
-      </Box>
+      </InputWrapper>
+      <GenerateQuery columns={columns} given={given} limit={limit} />
+      <AggregateBarChart
+        columns={columns}
+        maxShown={maxShown}
+        rows={rows.slice(0, limit)}
+      />
     </>
   );
 }
 
 GenerationAnimation.propTypes = {
-  n: PropTypes.number,
-  min: PropTypes.number,
-  rows: PropTypes.arrayOf(
-    PropTypes.shape({
-      Purpose: PropTypes.string,
-      Country_of_Operator: PropTypes.string,
-    })
-  ).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  given: PropTypes.object.isRequired,
+  maxShown: PropTypes.number,
+  minSamples: PropTypes.number,
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 GenerationAnimation.defaultProps = {
-  n: 10,
-  min: 1,
+  maxShown: 10,
+  minSamples: 1,
 };
