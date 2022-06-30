@@ -4,59 +4,70 @@ import { Box, Slider } from '@mantine/core';
 import { VegaLite } from 'react-vega';
 import PrismInput from './PrismInput';
 
-const spec = {
-  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-  mark: 'bar',
-  data: { name: 'table' },
-  transform: [
-    {
-      calculate: "datum.Purpose + ', ' + datum.Country_of_Operator",
-      as: 'group',
+const categoricals = ['Purpose', 'Country_of_Operator'];
+
+const categoricalList = categoricals.join(', ');
+const countAlias = `Count_${categoricals.join('_')}`;
+
+const spec = (n) => {
+  return {
+    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+    mark: 'bar',
+    data: { name: 'table' },
+    transform: [
+      {
+        calculate: categoricals
+          .map((column) => `datum.${column}`)
+          .join(" + ', ' + "),
+        as: 'group',
+      },
+      {
+        aggregate: [{ op: 'count', field: 'group', as: 'count' }],
+        groupby: ['group'],
+      },
+      {
+        window: [{ op: 'row_number', field: '', as: 'tag_rank' }],
+        sort: [{ field: 'count', order: 'descending' }],
+      },
+      {
+        filter: `datum.tag_rank <= ${n}`,
+      },
+    ],
+    encoding: {
+      y: {
+        field: 'group',
+        sort: '-x',
+        title: categoricalList,
+      },
+      x: {
+        type: 'quantitative',
+        field: 'count',
+        title: countAlias,
+      },
     },
-    {
-      aggregate: [{ op: 'count', field: 'group', as: 'count' }],
-      groupby: ['group'],
-    },
-    {
-      window: [{ op: 'row_number', field: '', as: 'tag_rank' }],
-      sort: [{ field: 'count', order: 'descending' }],
-    },
-    {
-      filter: 'datum.tag_rank <= 10',
-    },
-  ],
-  encoding: {
-    y: {
-      field: 'group',
-      sort: '-x',
-      title: 'Purpose, Country_of_Operator',
-    },
-    x: {
-      type: 'quantitative',
-      field: 'count',
-      title: 'Count_Purpose',
-    },
-  },
+  };
 };
 
-export default function GenerationAnimation({ min, rows }) {
-  const [limit, setLimit] = useState(1);
-
-  const query = `SELECT COUNT(*) AS Count_Purpose, Purpose, Country_of_Operator FROM
+const query = (limit) => {
+  return `SELECT COUNT(*) AS ${countAlias}, ${categoricalList} FROM
   (SELECT * FROM
-    GENERATE Country_of_Operator, Purpose
+    GENERATE ${categoricalList}
     UNDER baseline_model
     GIVEN Class_of_Orbit = "GEO" AND Dry_mass_kg = 500
   LIMIT ${limit})
 GROUP BY Purpose, Country_of_Operator
-ORDER BY Count_Purpose DESC
+ORDER BY ${countAlias} DESC
 LIMIT 10`;
+};
+export default function GenerationAnimation({ n, min, rows }) {
+  const [limit, setLimit] = useState(1);
 
   const limitedRows = rows.slice(0, limit);
   const max = rows.length;
 
   return (
     <>
+      <PrismInput mt="xl" disabled value={query(limit)} />
       <Slider
         max={max}
         min={min}
@@ -64,18 +75,23 @@ LIMIT 10`;
           { value: min, label: min },
           { value: max, label: max },
         ]}
-        mb="xl"
+        mb="md"
+        mt="md"
         onChange={setLimit}
       />
-      <PrismInput mt="xl" disabled value={query} />
       <Box mt="md">
-        <VegaLite actions={false} data={{ table: limitedRows }} spec={spec} />
+        <VegaLite
+          actions={false}
+          data={{ table: limitedRows }}
+          spec={spec(n)}
+        />
       </Box>
     </>
   );
 }
 
 GenerationAnimation.propTypes = {
+  n: PropTypes.number,
   min: PropTypes.number,
   rows: PropTypes.arrayOf(
     PropTypes.shape({
@@ -86,5 +102,6 @@ GenerationAnimation.propTypes = {
 };
 
 GenerationAnimation.defaultProps = {
+  n: 10,
   min: 1,
 };
