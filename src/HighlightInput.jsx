@@ -51,8 +51,8 @@ const language = ({ regex }) => {
   };
 
   const SCALAR = {
-    begin: /(?<=\b(SELECT|WHERE|ORDER\s+BY|LIMIT)\b)/,
-    end: /(?=\b(FROM|ORDER)\b)/,
+    begin: /(?<=\b(SELECT|FROM|WHERE|ORDER\s+BY|LIMIT)\b)/,
+    end: /(?=\b(FROM|WHERE|ORDER\s+BY)\b)/,
     keywords: {
       built_in: [
         'and',
