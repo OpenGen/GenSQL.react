@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Box, InputWrapper, Slider } from '@mantine/core';
 import { VegaLite } from 'react-vega';
-import PrismInput from './PrismInput';
+import HighlightInput from './HighlightInput';
 
 function GenerateQuery({ columns, given, limit, model }) {
   const format = (x) => (typeof x === 'string' ? `"${x}"` : x.toString());
@@ -17,7 +17,7 @@ function GenerateQuery({ columns, given, limit, model }) {
   GIVEN ${givenString}
 LIMIT ${limit}`;
 
-  return <PrismInput disabled value={query} />;
+  return <HighlightInput disabled value={query} />;
 }
 
 GenerateQuery.propTypes = {
