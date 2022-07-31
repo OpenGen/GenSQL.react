@@ -1,5 +1,5 @@
 import { ArrowBackUp, Database } from 'tabler-icons-react';
-import { Button, LoadingOverlay, Paper, Tabs } from '@mantine/core';
+import { Button, Code, LoadingOverlay, Paper, Tabs } from '@mantine/core';
 import { getHotkeyHandler } from '@mantine/hooks';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -68,6 +68,12 @@ export default function Query({ execute, initialQuery, statType }) {
         ref={editorRef}
         value={queryValue}
       />
+
+      {errorValue && (
+        <Code block color="red" mt="sm">
+          {errorValue.message}
+        </Code>
+      )}
 
       <Button
         disabled={isLoading}
