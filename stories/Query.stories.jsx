@@ -33,7 +33,7 @@ const cats = [
   { name: 'Zelda', age: 13, color: 'black' },
 ];
 
-const failingExecute = () => Promise.reject(new Error('oh no'));
+const failingExecute = () => Promise.reject(new Error('Oh no!'));
 
 export const Empty = Template.bind({});
 Empty.args = {
