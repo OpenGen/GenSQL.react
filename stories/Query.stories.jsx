@@ -15,23 +15,46 @@ function Template(args) {
   return <Query {...args} />;
 }
 
-const execute = () => ({
-  columns: ['name', 'age', 'color'],
-  rows: [
-    { name: 'Disco', age: 16, color: 'brown' },
-    { name: 'Henry', age: 14, color: 'orange' },
-    { name: 'Zelda', age: 13, color: 'black' },
-  ],
-});
+const makeExecute = (data, timeout) => () =>
+  new Promise((res) =>
+    setTimeout(
+      () =>
+        res({
+          columns: [...new Set(data.flatMap((datum) => Object.keys(datum)))],
+          rows: data,
+        }),
+      timeout || 250
+    )
+  );
+
+const cats = [
+  { name: 'Disco', age: 16, color: 'brown' },
+  { name: 'Henry', age: 14, color: 'orange' },
+  { name: 'Zelda', age: 13, color: 'black' },
+];
+
+const failingExecute = () => Promise.reject(new Error('oh no'));
 
 export const Empty = Template.bind({});
 Empty.args = {
-  execute,
+  execute: makeExecute(cats),
 };
 
 export const Populated = Template.bind({});
 Populated.args = {
-  execute,
+  execute: makeExecute(cats),
+  initialQuery: 'SELECT * FROM data',
+};
+
+export const Slow = Template.bind({});
+Slow.args = {
+  execute: makeExecute(cats, 5000),
+  initialQuery: 'SELECT * FROM data',
+};
+
+export const Fail = Template.bind({});
+Fail.args = {
+  execute: failingExecute,
   initialQuery: 'SELECT * FROM data',
 };
 
