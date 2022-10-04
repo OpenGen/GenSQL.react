@@ -26,6 +26,8 @@ const language = ({ regex }) => {
     'where',
   ];
 
+  const BUILT_IN = ['conditioned', 'constrained', 'generate', 'under'];
+
   const LITERALS = ['true', 'false', 'NULL'];
 
   const OPERATORS = ['>', '>=', '=', '<=', '<'];
@@ -58,8 +60,8 @@ const language = ({ regex }) => {
         'and',
         'by',
         'conditioned',
+        'constrained',
         'density',
-        'generate',
         'given',
         'of',
         'or',
@@ -77,6 +79,7 @@ const language = ({ regex }) => {
     case_insensitive: true,
     keywords: {
       keyword: KEYWORDS,
+      built_in: BUILT_IN,
       literal: LITERALS,
     },
     contains: [COMMA, SCALAR],
