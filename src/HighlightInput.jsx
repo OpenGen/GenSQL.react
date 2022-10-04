@@ -86,7 +86,7 @@ const language = ({ regex }) => {
 hljs.registerLanguage('iql', language);
 hljs.configure({ languages: ['iql', 'sql'] });
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { error }) => ({
   pre: {
     margin: 0,
   },
@@ -96,12 +96,12 @@ const useStyles = createStyles((theme) => ({
       cursor: 'not-allowed',
     },
     '&:focus-visible': {
-      borderColor: theme.colors.blue[6],
+      borderColor: error ? theme.colors.red : theme.colors.blue[6],
     },
     '&:empty': {
       minHeight: '15px',
     },
-    borderColor: theme.colors.gray[4],
+    borderColor: error ? theme.colors.red : theme.colors.gray[4],
     borderRadius: theme.radius.sm,
     borderStyle: 'solid',
     borderWidth: '1px',
@@ -119,6 +119,7 @@ const HighlightInput = React.forwardRef(
       className,
       classNames,
       disabled,
+      error,
       indentation,
       onChange,
       onKeyDown,
@@ -129,12 +130,13 @@ const HighlightInput = React.forwardRef(
     forwardedRef
   ) => {
     const ref = forwardedRef ?? useRef();
-    const { classes, cx } = useStyles(undefined, { classNames, styles });
+    const { classes, cx } = useStyles({ error }, { classNames, styles });
 
     useEditable(ref, onChange, { disabled, indentation });
 
     const handleKeyDown = (event, ...params) => {
       if (onKeyDown) onKeyDown(event, ...params);
+
       if (event.key === 'Backspace' && event.altKey) {
         // Without this only one character is deleted.
         event.stopPropagation();
@@ -167,6 +169,7 @@ HighlightInput.propTypes = {
   className: PropTypes.string,
   classNames: PropTypes.object,
   disabled: PropTypes.bool,
+  error: PropTypes.bool,
   indentation: PropTypes.number,
   onChange: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -178,6 +181,7 @@ HighlightInput.defaultProps = {
   className: undefined,
   classNames: undefined,
   disabled: false,
+  error: false,
   indentation: 2,
   onChange: undefined,
   onKeyDown: undefined,
