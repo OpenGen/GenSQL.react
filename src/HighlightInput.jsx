@@ -30,7 +30,7 @@ const language = ({ regex }) => {
 
   const LITERALS = ['true', 'false', 'NULL'];
 
-  const OPERATORS = ['>', '>=', '=', '<=', '<'];
+  const OPERATORS = ['>', '>=', '=', '<=', '<', /\*/, '/', /\+/, '-'];
 
   const OPERATOR = {
     scope: 'operator',
