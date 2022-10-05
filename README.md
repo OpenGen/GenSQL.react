@@ -1,6 +1,12 @@
-# storybook
+# Storybook
 
-## Install
+## Install dependencies
+
+```shell
+pnpm install 
+```
+
+## Install storybook
 
 ```shell
 pnpm add InferenceQL/storybook
