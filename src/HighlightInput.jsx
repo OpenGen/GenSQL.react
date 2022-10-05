@@ -51,6 +51,13 @@ const language = ({ regex }) => {
     match: /\b-?[0-9]+\.?(?:[0-9]+)?\b/,
   };
 
+  const AGGREGATION_FNS = ['avg', 'count', 'max', 'median', 'min', 'std'];
+
+  const AGGREGATION = {
+    scope: 'title.function.invoke',
+    match: regex.concat(/\b/, regex.either(...AGGREGATION_FNS), /\s*(?=\()/),
+  };
+
   const SCALAR = {
     begin: /(?<=\b(SELECT|WHERE|ORDER\s+BY|LIMIT)\b)/,
     end: /(?=\b(ASC|DESC|FROM|GROUP|WHERE|ORDER\s+BY|LIMIT)\b)/,
@@ -70,7 +77,7 @@ const language = ({ regex }) => {
         'var',
       ],
     },
-    contains: [COMMA, NUMBER, OPERATOR, STRING, VARIABLE],
+    contains: [AGGREGATION, COMMA, NUMBER, OPERATOR, STRING, VARIABLE],
   };
 
   return {
