@@ -111,7 +111,7 @@ const language = ({ regex }) => {
       built_in: BUILT_IN,
       literal: LITERALS,
     },
-    contains: [COMMA, SCALAR],
+    contains: [COMMA, NUMBER, SCALAR],
   };
 };
 
