@@ -81,16 +81,14 @@ const language = ({ regex }) => {
     ),
     excludeEnd: true,
     keywords: {
-      keyword: ['as', 'is', 'not'],
+      keyword: ['and', 'as', 'is', 'not', 'or'],
       built_in: [
-        'and',
         'by',
         'conditioned',
         'constrained',
         'density',
         'given',
         'of',
-        'or',
         'probability',
         'under',
       ],
