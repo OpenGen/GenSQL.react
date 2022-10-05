@@ -63,11 +63,7 @@ const language = ({ regex }) => {
   };
 
   const SCALAR = {
-    begin: regex.concat(
-      /\b/,
-      regex.either('select', 'where', /order\sby/, 'limit'),
-      /\b/
-    ),
+    begin: regex.concat(/\b/, regex.either('select', 'where'), /\b/),
     excludeBegin: true,
     end: regex.concat(
       /\b/,
