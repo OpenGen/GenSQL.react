@@ -52,7 +52,10 @@ Error.args = {
 
 export const MultiLine = Template.bind({});
 MultiLine.args = {
-  value: 'SELECT *\nFROM data\nWHERE x > 0;',
+  value: `SELECT *
+FROM data
+WHERE x > 0
+LIMIT 10`,
 };
 
 export const ProbabilityOf = Template.bind({});
