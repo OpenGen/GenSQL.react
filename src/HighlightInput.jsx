@@ -32,17 +32,17 @@ const language = ({ regex }) => {
   const OPERATORS = ['>', '>=', '=', '<=', '<'];
 
   const OPERATOR = {
-    className: 'operator',
+    scope: 'operator',
     match: regex.either(...OPERATORS),
   };
 
   const STRING = {
-    className: 'string',
+    scope: 'string',
     match: /"(?:[^"]*)+"/,
   };
 
   const VARIABLE = {
-    className: 'variable',
+    scope: 'variable',
     match: /(?<=VAR\s+)[^0-9\s][\w\-_?.]*\b/,
   };
 
