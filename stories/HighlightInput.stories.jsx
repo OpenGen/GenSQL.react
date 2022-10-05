@@ -70,6 +70,15 @@ ProbabilityOf.args = {
 FROM satellites`,
 };
 
+export const Given = Template.bind({});
+Given.args = {
+  value: `SELECT *
+FROM
+  GENERATE x
+  UNDER model
+  GIVEN y = "Hello, world!"`,
+};
+
 export const Aggregation = Template.bind({});
 Aggregation.args = {
   value: `SELECT
