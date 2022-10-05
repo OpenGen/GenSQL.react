@@ -71,7 +71,6 @@ const language = ({ regex }) => {
         'asc',
         'desc',
         'from',
-        'given',
         /group\sby/,
         'where',
         /order\sby/,
@@ -105,7 +104,7 @@ const language = ({ regex }) => {
       built_in: BUILT_IN,
       literal: LITERALS,
     },
-    contains: [COMMA, NUMBER, SCALAR],
+    contains: [COMMA, NUMBER, OPERATOR, STRING, SCALAR],
   };
 };
 
