@@ -85,7 +85,7 @@ const language = ({ regex }) => {
     ),
     excludeEnd: true,
     keywords: {
-      keyword: ['as'],
+      keyword: ['as', 'is', 'not'],
       built_in: [
         'and',
         'by',
