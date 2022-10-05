@@ -88,6 +88,8 @@ const language = ({ regex }) => {
         'constrained',
         'density',
         'given',
+        'information',
+        'mutual',
         'of',
         'probability',
         'under',
