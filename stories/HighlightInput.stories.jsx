@@ -88,3 +88,11 @@ Aggregation.args = {
   MEDIAN(Period_minutes) AS median
 FROM satellites`,
 };
+
+export const TableLiteral = Template.bind({});
+TableLiteral.args = {
+  value: `SELECT
+  PROBABILITY OF Period_minutes = 100
+  UNDER satellites_model AS prob
+FROM (dummy) VALUES ("dummyval")`,
+};
