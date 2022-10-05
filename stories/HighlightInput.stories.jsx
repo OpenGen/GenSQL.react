@@ -66,3 +66,13 @@ ProbabilityOf.args = {
   CONDITIONED BY VAR Class_of_Orbit="GEO"
 FROM satellites`,
 };
+
+export const Aggregation = Template.bind({});
+Aggregation.args = {
+  value: `SELECT
+  COUNT(Period_minutes) AS count,
+  AVG(Period_minutes) AS avg,
+  STD(Period_minutes) AS std,
+  MEDIAN(Period_minutes) AS median
+FROM satellites`,
+};
