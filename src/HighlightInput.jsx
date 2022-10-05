@@ -38,7 +38,8 @@ const language = ({ regex }) => {
 
   const STRING = {
     scope: 'string',
-    match: /"(?:[^"]*)+"/,
+    begin: '"',
+    end: '"',
   };
 
   const VARIABLE = {
