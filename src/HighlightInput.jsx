@@ -42,8 +42,11 @@ const language = ({ regex }) => {
   };
 
   const VARIABLE = {
-    scope: 'variable',
-    match: /(?<=VAR\s+)[^0-9\s][\w\-_?.]*\b/,
+    begin: [/VAR/, /\s+/, /[^0-9\s][\w\-_?.]*/],
+    beginScope: {
+      1: 'built_in',
+      3: 'variable',
+    },
   };
 
   const NUMBER = {
@@ -59,8 +62,27 @@ const language = ({ regex }) => {
   };
 
   const SCALAR = {
-    begin: /(?<=\b(SELECT|WHERE|ORDER\s+BY|LIMIT)\b)/,
-    end: /(?=\b(ASC|DESC|FROM|GROUP|WHERE|ORDER\s+BY|LIMIT)\b)/,
+    begin: regex.concat(
+      /\b/,
+      regex.either('select', 'where', /order\sby/, 'limit'),
+      /\b/
+    ),
+    excludeBegin: true,
+    end: regex.concat(
+      /\b/,
+      regex.either(
+        'asc',
+        'desc',
+        'from',
+        'given',
+        /group\sby/,
+        'where',
+        /order\sby/,
+        'limit'
+      ),
+      /\b/
+    ),
+    excludeEnd: true,
     keywords: {
       keyword: ['as'],
       built_in: [
@@ -74,7 +96,6 @@ const language = ({ regex }) => {
         'or',
         'probability',
         'under',
-        'var',
       ],
     },
     contains: [AGGREGATION, COMMA, NUMBER, OPERATOR, STRING, VARIABLE],
