@@ -1,4 +1,4 @@
-# Storybook
+# inferenceql.react
 
 ## Install dependencies
 
