@@ -13,7 +13,6 @@ const language = ({ regex }) => {
 
   const KEYWORDS = [
     'and',
-    'as',
     'asc',
     'by',
     'desc',
@@ -54,8 +53,9 @@ const language = ({ regex }) => {
 
   const SCALAR = {
     begin: /(?<=\b(SELECT|WHERE|ORDER\s+BY|LIMIT)\b)/,
-    end: /(?=\b(ASC|AS|DESC|FROM|GROUP|WHERE|ORDER\s+BY|LIMIT)\b)/,
+    end: /(?=\b(ASC|DESC|FROM|GROUP|WHERE|ORDER\s+BY|LIMIT)\b)/,
     keywords: {
+      keyword: ['as'],
       built_in: [
         'and',
         'by',
