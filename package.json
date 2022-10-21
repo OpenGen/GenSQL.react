@@ -46,12 +46,11 @@
     "prettier": "2.7.1"
   },
   "scripts": {
-    "build": "esbuild --bundle --format=esm src/main.ts --outdir=dist --sourcemap",
     "build-storybook": "build-storybook",
-    "clean": "rm -Rf dist",
-    "format": "pnpm prettier --ignore-path .gitignore --write .",
-    "lint": "pnpm eslint --ignore-path .gitignore --ext .jsx --ext .js --ext .jsx --ext .ts --ext .tsx .",
-    "prepare": "pnpm build && if [ -d .git ]; then husky install; fi",
+    "clean": "scripts/clean.sh",
+    "format": "scripts/format.sh",
+    "lint": "scripts/lint.sh",
+    "prepare": "scripts/prepare.sh",
     "storybook": "start-storybook -p 6006"
   },
   "files": [
