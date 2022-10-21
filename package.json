@@ -52,7 +52,7 @@
     "format": "pnpm prettier --ignore-path .gitignore --write .",
     "lint": "pnpm eslint --ignore-path .gitignore --ext .jsx --ext .js --ext .jsx --ext .ts --ext .tsx .",
     "postinstall": "pnpm build",
-    "prepare": "husky install",
+    "prepare": "if [ -d .git ]; then husky install; fi",
     "storybook": "start-storybook -p 6006"
   },
   "files": [
