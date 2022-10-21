@@ -46,6 +46,8 @@ dependencies:
   prismjs: 1.28.0
   prop-types: 15.8.1
   ramda: 0.28.0
+  react: 17.0.2
+  react-dom: 17.0.2_react@17.0.2
   react-vega: 7.6.0_3dhdjih4jxikrd6a2gbre75llu
   tabler-icons-react: 1.52.0_react@17.0.2
   use-editable: 2.3.3_react@17.0.2
@@ -75,8 +77,6 @@ devDependencies:
   git-format-staged: 3.0.0
   husky: 8.0.1
   prettier: 2.7.1
-  react: 17.0.2
-  react-dom: 17.0.2_react@17.0.2
 
 packages:
 
