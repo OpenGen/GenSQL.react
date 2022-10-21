@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Box, InputWrapper, Slider } from '@mantine/core';
+import { Box, Input, Slider } from '@mantine/core';
 import { VegaLite } from 'react-vega';
 import HighlightInput from './HighlightInput';
 
@@ -99,7 +99,7 @@ export default function GenerationAnimation({
 
   return (
     <>
-      <InputWrapper
+      <Input.Wrapper
         description="Choose the number of rows to be generated."
         label="Number of rows"
       >
@@ -114,7 +114,7 @@ export default function GenerationAnimation({
           mt="md"
           onChange={setLimit}
         />
-      </InputWrapper>
+      </Input.Wrapper>
       <GenerateQuery columns={columns} given={given} limit={limit} />
       <AggregateBarChart
         columns={columns}
