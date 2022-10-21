@@ -1,5 +1,5 @@
 {
-  "name": "@inferenceql/components",
+  "name": "@inferenceql/inferenceql.react",
   "version": "0.0.1-alpha",
   "dependencies": {
     "@mantine/core": "^4.2.12",
