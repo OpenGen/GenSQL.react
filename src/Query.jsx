@@ -33,7 +33,6 @@ export default function Query({ execute, initialQuery, statType }) {
   const [queryValue, setQueryValue] = React.useState(initialQuery || '');
   const [queryResult, setQueryResult, clearQueryResult] = useClearableState();
   const [errorValue, setErrorValue, clearErrorValue] = useClearableState();
-  const [activeTab, setActiveTab] = React.useState(0);
 
   const buttonRef = React.useRef();
   const editorRef = React.useRef();
@@ -101,8 +100,13 @@ export default function Query({ execute, initialQuery, statType }) {
       )}
 
       {queryResult && (
-        <Tabs mt="sm" active={activeTab} onTabChange={setActiveTab}>
-          <Tabs.Tab label="Table">
+        <Tabs mt="sm" defaultValue="table">
+          <Tabs.List>
+            <Tabs.Tab value="table">Table</Tabs.Tab>
+            {statType && <Tabs.Tab value="plots">Plots</Tabs.Tab>}
+            {mapShown && <Tabs.Tab value="map">Map</Tabs.Tab>}
+          </Tabs.List>
+          <Tabs.Panel value="table">
             <div style={{ position: 'relative' }}>
               <LoadingOverlay visible={isLoading} transitionDuration={0} />
               <DataTable
@@ -111,9 +115,9 @@ export default function Query({ execute, initialQuery, statType }) {
                 rows={queryResult.rows}
               />
             </div>
-          </Tabs.Tab>
-          {statType && (
-            <Tabs.Tab label="Plots">
+          </Tabs.Panel>
+          <Tabs.Panel value="plots">
+            {statType && (
               <PairPlot
                 data={queryResult.rows}
                 types={Object.fromEntries(
@@ -122,10 +126,10 @@ export default function Query({ execute, initialQuery, statType }) {
                     .filter(([col, type]) => col && type)
                 )}
               />
-            </Tabs.Tab>
-          )}
-          {mapShown && (
-            <Tabs.Tab label="Map">
+            )}
+          </Tabs.Panel>
+          <Tabs.Panel value="map">
+            {mapShown && (
               <WorldMap
                 data={queryResult.rows}
                 types={Object.fromEntries(
@@ -134,8 +138,8 @@ export default function Query({ execute, initialQuery, statType }) {
                     .filter(([col, type]) => col && type)
                 )}
               />
-            </Tabs.Tab>
-          )}
+            )}
+          </Tabs.Panel>
         </Tabs>
       )}
     </Paper>
