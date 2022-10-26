@@ -103,8 +103,12 @@ export default function Query({ execute, initialQuery, statType }) {
         <Tabs mt="sm" defaultValue="table">
           <Tabs.List>
             <Tabs.Tab value="table">Table</Tabs.Tab>
-            {statType && <Tabs.Tab value="plots">Plots</Tabs.Tab>}
-            {mapShown && <Tabs.Tab value="map">Map</Tabs.Tab>}
+            <Tabs.Tab value="plots" disabled={!statType}>
+              Plots
+            </Tabs.Tab>
+            <Tabs.Tab value="map" disabled={!mapShown}>
+              Map
+            </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="table">
             <div style={{ position: 'relative' }}>
