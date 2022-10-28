@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-pnpm esbuild --bundle --format=esm src/main.ts --outdir=dist --sourcemap
+pnpm tsc --build
 
 if [ -d .git ];
 then
