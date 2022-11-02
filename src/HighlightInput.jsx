@@ -15,10 +15,14 @@ const language = ({ regex }) => {
     'and',
     'asc',
     'by',
+    'cross',
     'desc',
     'from',
     'group',
+    'inner',
+    'join',
     'limit',
+    'on',
     'or',
     'order',
     'select',
@@ -81,7 +85,7 @@ const language = ({ regex }) => {
     ),
     excludeEnd: true,
     keywords: {
-      keyword: ['and', 'as', 'is', 'not', 'or'],
+      keyword: ['and', 'distinct', 'as', 'is', 'not', 'or'],
       built_in: [
         'by',
         'conditioned',
