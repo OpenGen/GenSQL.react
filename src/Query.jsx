@@ -38,10 +38,6 @@ export default function Query({ execute, initialQuery, statType }) {
   const buttonRef = React.useRef();
   const editorRef = React.useRef();
 
-  function changeQuery(query) {
-    return 'SELECT ' + query;
-  }
-
   const handleExecute = () => {
     execute(queryValue)
       .then(both(setQueryResult, clearErrorValue))
