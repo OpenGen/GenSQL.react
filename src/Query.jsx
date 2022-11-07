@@ -43,8 +43,7 @@ export default function Query({ execute, initialQuery, statType }) {
   }
 
   const handleExecute = () => {
-    changeQuery(queryValue)
-      .execute()
+    execute(queryValue)
       .then(both(setQueryResult, clearErrorValue))
       .catch(both(setErrorValue, clearQueryResult))
       .finally(setNotLoading);
