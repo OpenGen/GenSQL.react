@@ -10,7 +10,7 @@ import WorldMap from './WorldMap';
 const { Configuration, OpenAIApi } = require('openai');
 
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: process.env.OPENAI_API_KEY
 });
 const openai = new OpenAIApi(configuration);
 
