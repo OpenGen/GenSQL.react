@@ -39,7 +39,7 @@ export default function Query({ execute, initialQuery, statType }) {
   const editorRef = React.useRef();
 
   const handleExecute = () => {
-    execute(queryValue)
+    execute('SELECT ' + queryValue)
       .then(both(setQueryResult, clearErrorValue))
       .catch(both(setErrorValue, clearQueryResult))
       .finally(setNotLoading);

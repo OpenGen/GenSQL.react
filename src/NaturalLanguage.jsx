@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 const { Configuration, OpenAIApi } = require('openai');
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: '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',
 });
 const openai = new OpenAIApi(configuration);
 
