@@ -108,7 +108,9 @@ SELECT `;
   }
 
   const handleExecute = () => {
-    execute(queryValue)
+    iqlText = await english_to_iql(queryValue)
+
+    execute(iqlText)
       .then(both(setQueryResult, clearErrorValue))
       .catch(both(setErrorValue, clearQueryResult))
       .finally(setNotLoading);
