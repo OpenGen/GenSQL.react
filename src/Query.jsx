@@ -43,6 +43,7 @@ const both =
   };
 
 export default function Query({ execute, initialQuery, statType }) {
+  statType = true;
   console.log('this is the stattype');
   console.log(statType);
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
@@ -134,6 +135,7 @@ SELECT `;
   ]);
 
   const mock_stat_type = (col) => {
+    console.log(col);
     if (col === 'Gender') {
       stat_type = 'nominal';
     } else if (col === 'Ethnicity') {
