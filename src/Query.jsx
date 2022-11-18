@@ -130,7 +130,7 @@ SELECT `;
 
   return (
     <Paper p="xs" radius="xs" shadow="md" withBorder>
-      <Input
+      <TextInput
         disabled={isLoading}
         error={Boolean(errorValue)}
         onChange={both(setQueryValue, clearErrorValue)}
