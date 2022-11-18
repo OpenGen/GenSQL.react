@@ -101,7 +101,7 @@ FROM developer_records
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
-      model: 'text-davinci-002',
+      model: 'code-davinci-002',
       prompt: prompt,
       temperature: 0,
       max_tokens: 200,
