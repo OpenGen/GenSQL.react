@@ -1,19 +1,26 @@
 import { ArrowBackUp, Database } from 'tabler-icons-react';
-import { Input, Button, Code, LoadingOverlay, Paper, Tabs } from '@mantine/core';
+import {
+  TextInput,
+  Button,
+  Code,
+  LoadingOverlay,
+  Paper,
+  Tabs,
+} from '@mantine/core';
 import { getHotkeyHandler } from '@mantine/hooks';
 import React from 'react';
 import PropTypes from 'prop-types';
 import DataTable from './DataTable';
 import HighlightInput from './HighlightInput';
+import TextField from '@mui/material/TextField';
 import PairPlot from './PairPlot';
 import WorldMap from './WorldMap';
 
 const { Configuration, OpenAIApi } = require('openai');
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
-
 
 const useClearableState = (initialValue) => {
   const [value, setValue] = React.useState(initialValue);
@@ -37,15 +44,17 @@ const both =
 
 export default function Query({ execute, initialQuery, statType }) {
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
-  const [queryValue, setQueryValue] = React.useState(initialQuery || '');
+  const [englishQueryValue, setEnglishQueryValue] =
+    React.useState('Insert query');
+  const [iqlQueryValue, setIQLQueryValue] = React.useState('');
   const [queryResult, setQueryResult, clearQueryResult] = useClearableState();
   const [errorValue, setErrorValue, clearErrorValue] = useClearableState();
 
   const buttonRef = React.useRef();
   const editorRef = React.useRef();
 
-   async function english_to_iql(english_query) {
-     var prompt = `
+  async function english_to_iql(english_query) {
+    var prompt = `
 ### IQL table with properties
 # data(SalaryUSD, Gender, Ethnicity, YearsCodeProfessional, Background)
 # Stackoverflow Developer Survey
@@ -108,7 +117,7 @@ SELECT `;
   }
 
   const handleExecute = () => {
-    english_to_iql(queryValue)
+    english_to_iql(englishQueryValue)
       .then(execute)
       .then(both(setQueryResult, clearErrorValue))
       .catch(both(setErrorValue, clearQueryResult))
@@ -131,12 +140,12 @@ SELECT `;
   return (
     <Paper p="xs" radius="xs" shadow="md" withBorder>
       <TextInput
-        disabled={isLoading}
-        error={Boolean(errorValue)}
-        onChange={both(setQueryValue, clearErrorValue)}
+        // disabled={isLoading}
+        // error={Boolean(errorValue)}
+        onChange={(val) => setEnglishQueryValue(val)}
         onKeyDown={onKeyDown}
-        ref={editorRef}
-        value={queryValue}
+        // ref={editorRef}
+        // value={queryValue}
       />
 
       {errorValue && (
@@ -157,6 +166,16 @@ SELECT `;
       >
         Execute
       </Button>
+      <p> </p>
+
+      <HighlightInput
+        disabled={isLoading}
+        error={Boolean(errorValue)}
+        onChange={both(setIQLQueryValue, clearErrorValue)}
+        onKeyDown={onKeyDown}
+        ref={editorRef}
+        value={iqlQueryValue}
+      />
 
       {queryResult && (
         <Button
