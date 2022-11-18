@@ -43,6 +43,8 @@ const both =
   };
 
 export default function Query({ execute, initialQuery, statType }) {
+  console.log('this is the stattype');
+  console.log(statType);
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
   const [englishQueryValue, setEnglishQueryValue] = React.useState();
   const [queryValue, setQueryValue] = React.useState('');
