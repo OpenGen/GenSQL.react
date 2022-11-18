@@ -46,7 +46,7 @@ export default function Query({ execute, initialQuery, statType }) {
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
   const [englishQueryValue, setEnglishQueryValue] =
     React.useState('Insert query');
-  const [iqlQueryValue, setIQLQueryValue] = React.useState('');
+  const [queryValue, setQueryValue] = React.useState('');
   const [queryResult, setQueryResult, clearQueryResult] = useClearableState();
   const [errorValue, setErrorValue, clearErrorValue] = useClearableState();
 
@@ -111,9 +111,10 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    console.log(response.data.choices[0].text);
-    var output = response.data.choices[0].text;
-    return 'SELECT ' + output;
+    const output = 'SELECT ' + response.data.choices[0].text;
+    console.log(output);
+    setQueryValue(output);
+    return output;
   }
 
   const handleExecute = () => {
@@ -171,10 +172,9 @@ SELECT `;
       <HighlightInput
         disabled={isLoading}
         error={Boolean(errorValue)}
-        onChange={both(setIQLQueryValue, clearErrorValue)}
         onKeyDown={onKeyDown}
         ref={editorRef}
-        value={iqlQueryValue}
+        value={queryValue}
       />
 
       {queryResult && (
