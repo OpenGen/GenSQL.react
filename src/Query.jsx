@@ -1,5 +1,5 @@
 import { ArrowBackUp, Database } from 'tabler-icons-react';
-import { Button, Code, LoadingOverlay, Paper, Tabs } from '@mantine/core';
+import { Input, Button, Code, LoadingOverlay, Paper, Tabs } from '@mantine/core';
 import { getHotkeyHandler } from '@mantine/hooks';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -130,7 +130,7 @@ SELECT `;
 
   return (
     <Paper p="xs" radius="xs" shadow="md" withBorder>
-      <HighlightInput
+      <Input
         disabled={isLoading}
         error={Boolean(errorValue)}
         onChange={both(setQueryValue, clearErrorValue)}
