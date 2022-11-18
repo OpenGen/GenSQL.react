@@ -133,6 +133,17 @@ SELECT `;
     ['shift+Enter', handleExecute],
   ]);
 
+  const mock_stat_type = (col) => {
+    if (col === 'Gender') {
+      stat_type = 'nominal';
+    } else if (col === 'Ethnicity') {
+      stat_type = 'nominal';
+    } else {
+      stat_type = 'quantitative';
+    }
+    return [col, stat_type];
+  };
+
   const mapShown =
     queryResult &&
     statType &&
@@ -196,9 +207,7 @@ SELECT `;
         <Tabs mt="sm" defaultValue="table">
           <Tabs.List>
             <Tabs.Tab value="table">Table</Tabs.Tab>
-            <Tabs.Tab value="plots" disabled={!statType}>
-              Plots
-            </Tabs.Tab>
+            <Tabs.Tab value="plots">Plots</Tabs.Tab>
             <Tabs.Tab value="map" disabled={!mapShown}>
               Map
             </Tabs.Tab>
@@ -219,7 +228,7 @@ SELECT `;
                 data={queryResult.rows}
                 types={Object.fromEntries(
                   queryResult.columns
-                    .map((col) => [col, statType(col)])
+                    .map((col) => mock_stat_type(col))
                     .filter(([col, type]) => col && type)
                 )}
               />
