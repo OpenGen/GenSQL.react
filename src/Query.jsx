@@ -44,8 +44,7 @@ const both =
 
 export default function Query({ execute, initialQuery, statType }) {
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
-  const [englishQueryValue, setEnglishQueryValue] =
-    React.useState('Insert query');
+  const [englishQueryValue, setEnglishQueryValue] = React.useState();
   const [queryValue, setQueryValue] = React.useState('');
   const [queryResult, setQueryResult, clearQueryResult] = useClearableState();
   const [errorValue, setErrorValue, clearErrorValue] = useClearableState();
@@ -118,6 +117,7 @@ SELECT `;
   }
 
   const handleExecute = () => {
+    console.log(englishQueryValue);
     english_to_iql(englishQueryValue)
       .then(execute)
       .then(both(setQueryResult, clearErrorValue))
@@ -143,10 +143,11 @@ SELECT `;
       <TextInput
         // disabled={isLoading}
         // error={Boolean(errorValue)}
-        onChange={(val) => setEnglishQueryValue(val)}
+        placeholder="Insert your query here"
+        onChange={(val) => setEnglishQueryValue(val.target.value)}
         onKeyDown={onKeyDown}
         // ref={editorRef}
-        // value={queryValue}
+        value={englishQueryValue}
       />
 
       {errorValue && (
