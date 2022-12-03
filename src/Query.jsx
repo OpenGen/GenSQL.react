@@ -1,6 +1,7 @@
 import { ArrowBackUp, Database } from 'tabler-icons-react';
 import {
   TextInput,
+  TextArea,
   Button,
   Code,
   LoadingOverlay,
@@ -140,7 +141,7 @@ SELECT `;
 
   return (
     <Paper p="xs" radius="xs" shadow="md" withBorder>
-      <TextInput
+      <TextArea
         // disabled={isLoading}
         // error={Boolean(errorValue)}
         placeholder="Insert your query here"
@@ -148,7 +149,7 @@ SELECT `;
         onKeyDown={onKeyDown}
         // ref={editorRef}
         value={englishQueryValue}
-        fz="xl"
+        size="xl"
       />
 
       {errorValue && (
