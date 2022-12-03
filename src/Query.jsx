@@ -44,7 +44,6 @@ const both =
   };
 
 export default function Query({ execute, initialQuery, statType }) {
-  console.log('passed here');
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
   const [englishQueryValue, setEnglishQueryValue] = React.useState();
   const [queryValue, setQueryValue] = React.useState('');
@@ -169,7 +168,7 @@ SELECT `;
         variant="default"
         onClick={handleExecute}
       >
-        Execute
+        Ask
       </Button>
       <p> </p>
 
