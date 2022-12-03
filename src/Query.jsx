@@ -148,6 +148,7 @@ SELECT `;
         onKeyDown={onKeyDown}
         // ref={editorRef}
         value={englishQueryValue}
+        fz="xl"
       />
 
       {errorValue && (
