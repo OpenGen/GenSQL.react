@@ -26,6 +26,7 @@ const language = ({ regex }) => {
     'or',
     'order',
     'select',
+    'time',
     'values',
     'where',
   ];
