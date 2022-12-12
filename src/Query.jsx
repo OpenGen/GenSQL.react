@@ -60,6 +60,26 @@ export default function Query({ execute, initialQuery, statType }) {
 # Stackoverflow Developer Survey
 # Explore the developer records
 SELECT * FROM developer_records LIMIT 5
+### Generate synthetic data
+# Show me four synthetic developer records
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
+# Show me two synthetic developer records
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 2
+# Generate four synthetic developer records
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
+# Generate four female synthetic developer records
+SELECT * FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Gender="Woman"
+LIMIT 4
+# Generate synthetic developer records for developers who know Python and Clojure and who learn less than 150k
+SELECT * FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Clojure="yes" AND Python="yes" AND SalaryUSD < 150000
+LIMIT 4
+
 # Show me developers' salary, gender, and ethnicity
 SELECT SalaryUSD, Gender, Ethnicity FROM developer_records
 # List the 10 most frequent gender and ethnicity pairs
