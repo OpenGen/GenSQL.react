@@ -58,8 +58,17 @@ export default function Query({ execute, initialQuery, statType }) {
 ### IQL table with properties
 # data(SalaryUSD, Gender, Ethnicity, YearsCodeProfessional, Background)
 # Stackoverflow Developer Survey
+#### Data queries
 # Explore the developer records
 SELECT * FROM developer_records LIMIT 5
+# Show the salary, age, and years coding for developers in the datatable that have experience with Clojure, JavaScript and Python.
+SELECT
+Salary_USD,
+Age,
+Years_coding
+FROM developer_records
+WHERE
+Clojure = "Yes" AND JavaScript = "Yes" AND Python = "Yes"
 ### Generate synthetic data
 # All queries with GENERATE need to start with a SELECT.
 # All queries with GENERATE need to end with LIMIT and a number.
@@ -81,6 +90,9 @@ SELECT * FROM
     UNDER developer_record_generator
       GIVEN Clojure="yes" AND Python="yes" AND SalaryUSD < 150000
 LIMIT 4
+# show the distribution of salary, age, and experience for developers in the database that have experience with Clojure, JavaScript and Python.
+
+### Probability queries
 # How likely is it that developers who know Python and Rust know Clojure?
 SELECT
   PROBABILITY OF Clojure="yes"
