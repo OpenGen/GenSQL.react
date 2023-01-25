@@ -88,33 +88,33 @@ LIMIT 4
 SELECT * FROM
   GENERATE *
     UNDER developer_record_generator
-      GIVEN Clojure="yes" AND Python="yes" AND Salary_USD < 150000
+      GIVEN Clojure="Yes" AND Python="Yes" AND Salary_USD < 150000
 LIMIT 4
 # show the distribution of salary, age, and experience for developers in the database that have experience with Clojure, JavaScript and Python.
 
 ### Probability queries
 # How likely is it that developers who know Python and Rust know Clojure?
 SELECT
-  PROBABILITY OF Clojure="yes"
+  PROBABILITY OF Clojure="Yes"
     UNDER developer_record_generator
-      GIVEN Python="yes" AND Rust="yes"
+      GIVEN Python="Yes" AND Rust="Yes"
         AS likelihood
 FROM developer_records LIMIT 1
 
 # How likely is it that developers data know Python and Java know Clojure and SQL?
 SELECT
-  PROBABILITY OF Clojure="yes" AND SQL="yes"
+  PROBABILITY OF Clojure="Yes" AND SQL="Yes"
     UNDER developer_record_generator
-      GIVEN Python="yes" AND Java="yes"
+      GIVEN Python="Yes" AND Java="Yes"
         AS likelihood
 FROM developer_records LIMIT 1
 
 
 # How likely is it that developers data know Python and Java know Clojure and SQL?
 SELECT
-  PROBABILITY OF Clojure="yes" AND SQL="yes"
+  PROBABILITY OF Clojure="Yes" AND SQL="Yes"
     UNDER developer_record_generator
-      GIVEN Python="yes" AND Java="yes"
+      GIVEN Python="Yes" AND Java="Yes"
         AS likelihood
 FROM developer_records LIMIT 1
 
