@@ -79,6 +79,30 @@ SELECT * FROM
     UNDER developer_record_generator
       GIVEN Clojure="yes" AND Python="yes" AND SalaryUSD < 150000
 LIMIT 4
+# How likely is it that developers who know Python and Rust know Clojure?
+SELECT
+  PROBABILITY OF Clojure="yes"
+    UNDER developer_record_generator
+      GIVEN Python="yes" AND Rust="yes"
+        AS likelihood
+FROM developer_records LIMIT 1
+
+# How likely is it that developers data know Python and Java know Clojure and SQL?
+SELECT
+  PROBABILITY OF Clojure="yes" AND SQL="yes"
+    UNDER developer_record_generator
+      GIVEN Python="yes" AND Java="yes"
+        AS likelihood
+FROM developer_records LIMIT 1
+
+
+# How likely is it that developers data know Python and Java know Clojure and SQL?
+SELECT
+  PROBABILITY OF Clojure="yes" AND SQL="yes"
+    UNDER developer_record_generator
+      GIVEN Python="yes" AND Java="yes"
+        AS likelihood
+FROM developer_records LIMIT 1
 
 # Show me developers' salary, gender, and ethnicity
 SELECT SalaryUSD, Gender, Ethnicity FROM developer_records
