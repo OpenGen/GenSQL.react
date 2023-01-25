@@ -61,7 +61,9 @@ export default function Query({ execute, initialQuery, statType }) {
 # Explore the developer records
 SELECT * FROM developer_records LIMIT 5
 ### Generate synthetic data
-# Show me four synthetic developer records
+# All queries with GENERATE need to start with a SELECT.
+# All queries with GENERATE need to end with LIMIT and a number.
+# Show me four synthetic developer records.
 SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
 # Show me two synthetic developer records
 SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 2
