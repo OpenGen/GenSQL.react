@@ -71,9 +71,18 @@ Years_coding
 FROM developer_records
 WHERE
 Clojure = "Yes" AND JavaScript = "Yes" AND Python = "Yes"
+# Show me salary, age and work experience for developers knowing Clojure and Python
+SELECT
+    Salary_USD,
+    Age,
+    Work_experience
+FROM developer_records WHERE Clojure = "Yes" AND Python = "Yes"
 ### Generate synthetic data
 # All queries with GENERATE need to start with a SELECT.
 # All queries with GENERATE need to end with LIMIT and a number.
+
+# Show me four synthetic developer records.
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
 # Show me four synthetic developer records.
 SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
 # Show me two synthetic developer records
@@ -93,6 +102,13 @@ SELECT * FROM
       GIVEN Clojure="Yes" AND Python="Yes" AND Salary_USD < 150000
 LIMIT 4
 # show the distribution of salary, age, and experience for developers in the database that have experience with Clojure, JavaScript and Python.
+
+# show me salary, age and work experience for 1000 synthetic developers knowing clojure and python
+SELECT Salary_USD, Age, Work_experience FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Clojure="Yes" AND Python="Yes"
+LIMIT 1000
 
 ### Probability queries
 # How likely is it that developers who know Python and Rust know Clojure?
