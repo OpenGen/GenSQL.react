@@ -68,10 +68,18 @@ WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model.
 # Never use IN as part of the query.
 # Stackoverflow Developer Survey
 #### Data queries
-# Explore the developer records
-SELECT * FROM developer_records LIMIT 5
 # Show me the first 20 rows of the data
 SELECT * FROM developer_records LIMIT 20
+# Explore the developer records
+SELECT * FROM developer_records LIMIT 5
+#Rows are developers.
+# For finding similar developers, we can incorporate a label into the model.
+# A model expression that incorporated a label can be written as follows, where baseline_model in the model
+INCORPORATE (1 = true, 2 = true) INTO baseline_model
+# To run a query with a modified model, we need to create an environmement to run the query in. This can happen using the WITH keyword. For example, in the follwoing, we change the environment to rename the model to new_name.
+# WITH baseline_model AS new_name:
+    SELECT * FROM data
+We can combine this to find similar developers
 # Find 10 developers that are similar to developers with ID 1 and ID 2
 WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model AS search_model:
     SELECT
