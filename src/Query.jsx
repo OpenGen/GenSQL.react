@@ -128,6 +128,7 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
                     AS p FROM data
     ORDER BY p DESC
     LIMIT 10
+# Never use anything that uses IN. For WHERE Developer_ID IN (2, 3, 4) should never be run.
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
