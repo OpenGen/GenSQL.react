@@ -151,6 +151,9 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
+    console.log('XXXXXX');
+    console.log('X Strict');
+    console.log('XXXXXX');
     const output = 'SELECT ' + response.data.choices[0].text;
     console.log(output);
     setQueryValue(output);
