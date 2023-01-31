@@ -69,9 +69,9 @@ WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model.
 # Stackoverflow Developer Survey
 #### Data queries
 # Show me the first 20 rows of the data
-SELECT * FROM developer_records LIMIT 20
+SELECT * FROM data LIMIT 20
 # Explore the developer records
-SELECT * FROM developer_records LIMIT 5
+SELECT * FROM data LIMIT 5
 #Rows are developers.
 # For finding similar developers, we can incorporate a label into the model.
 # A model expression that incorporated a label can be written as follows, where baseline_model in the model
@@ -137,6 +137,8 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
     ORDER BY p DESC
     LIMIT 10
 # Never use anything that uses IN. For WHERE Developer_ID IN (2, 3, 4) should never be run.
+# The following is wrong. It does not find similar developers:
+SELECT * FROM data WHERE Developer_ID IN (2, 3, 4)
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
