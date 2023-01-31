@@ -57,9 +57,15 @@ export default function Query({ execute, initialQuery, statType }) {
     var prompt = `
 ### IQL table with properties
 # data(Developer_ID,Age,Salary_USD,NumPy,Pandas,JavaScript,HTML_CSS,npm)
-In this data table "Yes" always starts with a capital "Y"
-In this data table "No" always starts with a capital "N"
+# In this data table "Yes" always starts with a capital "Y"
+# In this data table "No" always starts with a capital "N"
 
+# Find developers that are similar has to rely on a WITH statement.
+# Developer IDs are incorporated into the baselin_model. For example, to find developers similar to developer with ID 1 and ID 2, you need to run the following:
+WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model.
+# Finding developers does not work like normal SQL code.
+# We create context with a WITH statement to modify the model.
+# Never use IN as part of the query.
 # Stackoverflow Developer Survey
 #### Data queries
 # Explore the developer records
