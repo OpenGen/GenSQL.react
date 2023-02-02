@@ -146,7 +146,8 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
                     AS p FROM data
     ORDER BY p DESC
     LIMIT 10
-# ${english_query}`;
+# ${english_query}
+WITH `;
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
@@ -157,7 +158,7 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = response.data.choices[0].text;
+    const output = 'WITH ' + response.data.choices[0].text;
     console.log('XXXXXX ---- Strict test ----- XXXXXX');
     console.log(output);
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
