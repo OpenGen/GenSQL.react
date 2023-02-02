@@ -142,7 +142,7 @@ SELECT * FROM data WHERE Developer_ID IN (2, 3, 4)
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
-      model: 'text-davinci-003',
+      model: 'code-davinci-002',
       prompt: prompt,
       temperature: 0,
       max_tokens: 200,
@@ -151,11 +151,10 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    console.log('XXXXXX');
-    console.log('X Strict');
-    console.log('XXXXXX');
     const output = 'SELECT ' + response.data.choices[0].text;
+    console.log('XXXXXX ---- Strict test ----- XXXXXX');
     console.log(output);
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
     setQueryValue(output);
     return output;
   }
