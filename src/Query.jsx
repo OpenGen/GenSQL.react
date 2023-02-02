@@ -54,6 +54,11 @@ export default function Query({ execute, initialQuery, statType }) {
   const editorRef = React.useRef();
 
   async function english_to_iql(english_query) {
+    if (english_query.startsWith('Find', 0)) {
+      var qstart = 'WITH';
+    } else {
+      var qstart = 'SELECT';
+    }
     var prompt = `
 ### IQL table with properties
 # data(Developer_ID,Age,Salary_USD,NumPy,Pandas,JavaScript,HTML_CSS,npm)
@@ -147,7 +152,7 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
     ORDER BY p DESC
     LIMIT 10
 # ${english_query}
-WITH `;
+${qstart} `;
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
@@ -158,7 +163,7 @@ WITH `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = 'WITH ' + response.data.choices[0].text;
+    const output = qstart + response.data.choices[0].text;
     console.log('XXXXXX ---- Strict test ----- XXXXXX');
     console.log(output);
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
