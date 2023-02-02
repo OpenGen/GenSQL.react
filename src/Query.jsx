@@ -142,7 +142,7 @@ SELECT * FROM data WHERE Developer_ID IN (2, 3, 4)
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
-      model: 'code-davinci-002',
+      model: 'text-davinci-003',
       prompt: prompt,
       temperature: 0,
       max_tokens: 200,
