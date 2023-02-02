@@ -59,11 +59,11 @@ export default function Query({ execute, initialQuery, statType }) {
 # data(Developer_ID,Age,Salary_USD,NumPy,Pandas,JavaScript,HTML_CSS,npm)
 # In this data table "Yes" always starts with a capital "Y"
 # In this data table "No" always starts with a capital "N"
+# Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference.
+# Unlike SQL, queries often start with the WITH keyword.
 
-# Find developers that are similar has to rely on a WITH statement.
-# Developer IDs are incorporated into the baselin_model. For example, to find developers similar to developer with ID 1 and ID 2, you need to run the following:
-WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model.
-# Finding developers does not work like normal SQL code.
+# Reason about your output and remember that InferenceQL is not like SQL. Queries can start with the WITH keyword.
+
 # We create context with a WITH statement to modify the model.
 # Never use IN as part of the query.
 # Stackoverflow Developer Survey
@@ -74,10 +74,10 @@ SELECT * FROM data LIMIT 20
 SELECT * FROM data LIMIT 5
 #Rows are developers.
 ### Search/find queries
-# The WITH keyword allows you to bind names to values for the lifetime of a query. This can be useful in situations where you want the same value to be used for every row in a table. One example is conditioning a model for use in a SELECT expression.
+# The WITH keyword allows you to bind names to values for the lifetime of a query. This can be useful in situations where you want the same value to be used for every row in a table. One example is conditioning a model for use in a SELECT expression. Unlike in SQL, WITH is always to first keyword in a query. After the WITH binding, a column indicates the start of the SELECT query.
 WITH (baseline_model CONDITIONED BY VAR NumPy = "Yes") AS search_model:
   SELECT PROBABILITY OF VAR Python = "Yes" UNDER search_model.
-# For finding similar developers, we can incorporate a label into the model.
+# WITH is also useful to find similar developers. For finding similar developers, we can incorporate a label into the model.
 # A model expression that incorporated a label can be written as follows, where baseline_model in the model
 INCORPORATE (1 = true, 2 = true) INTO baseline_model.
 # Search queries are queries where users want to find similar developers. They always start with the word "find".
@@ -144,6 +144,8 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
 # Never use anything that uses IN. For WHERE Developer_ID IN (2, 3, 4) should never be run.
 # The following is wrong. It does not find similar developers:
 SELECT * FROM data WHERE Developer_ID IN (2, 3, 4)
+# Never use the IN keyword.
+# Never use WITH if it's not the first line of the query.
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
