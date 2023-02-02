@@ -64,7 +64,7 @@ export default function Query({ execute, initialQuery, statType }) {
 
 # Reason about your output and remember that InferenceQL is not like SQL. Queries can start with the WITH keyword. 
 # We create context with a WITH statement to modify the model.
-# Never use IN as part of the query.
+
 # Stackoverflow Developer Survey
 #### Data queries
 # Show me the first 20 rows of the data
@@ -146,8 +146,7 @@ WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search
                     AS p FROM data
     ORDER BY p DESC
     LIMIT 10
-# ${english_query}
-SELECT `;
+# ${english_query}`;
     const response = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
@@ -158,7 +157,7 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = 'SELECT ' + response.data.choices[0].text;
+    const output = response.data.choices[0].text;
     console.log('XXXXXX ---- Strict test ----- XXXXXX');
     console.log(output);
     console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
