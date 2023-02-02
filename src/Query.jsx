@@ -73,8 +73,10 @@ SELECT * FROM data LIMIT 20
 SELECT * FROM data LIMIT 5
 #Rows are developers.
 ### Search/find queries
+# Never use WHERE. InferenceQL can't handle WHERE.
 # InferenceQL does not have the keyword IN.
 # Questions or prompts that start with the word find need the WITH keyword.
+# The WITH keyword has to appear at the top level of the Query.
 # Never use WITH if it's not the first line of the query.
 # The WITH keyword allows you to bind names to values for the lifetime of a query. This can be useful in situations where you want the same value to be used for every row in a table. One example is conditioning a model for use in a SELECT expression. Unlike in SQL, WITH is always to first keyword in a query. After the WITH binding, a column indicates the start of the SELECT query.
 WITH (baseline_model CONDITIONED BY VAR NumPy = "Yes") AS search_model:
