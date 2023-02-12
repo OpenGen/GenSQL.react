@@ -98,7 +98,7 @@ WHERE
 
 # One example of a scalar expression is SIMILARITY TO. SIMILARITY TO compares rows. Rows can be indexed with names. SIMILARITY TO also works with HYPOTHETICAL ROWs. Such rows don't exist in the data table.
 
-# Show me colleges that are similar to a hypothetical college in a midsize city, with a size of 8000 students and a median debt of 10000 dollars and invesment in teaching 600000 in the context of institutional investment.
+# Show me colleges that are similar to a hypothetical college in a midsize city, with a size of 8000 students and a median debt of 10000 dollars and investment in teaching 600000 in the context of institutional investment.
 SELECT
     ROWID,
     SAT_score_math,
