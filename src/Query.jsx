@@ -61,7 +61,7 @@ export default function Query({ execute, initialQuery, statType }) {
     }
     var prompt = `
 ### IQL table with properties
-# data(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
+# college_records(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
 
 # Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
 # In the example, the data table is called college_records and the model is called college_record_generator.
@@ -122,7 +122,7 @@ ORDER BY probability_similar DESC
 LIMIT 10
 
 
-# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment..
+Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment.
 SELECT
     ROWID,
     SAT_score_math,
@@ -149,11 +149,9 @@ FROM (
     )
 ORDER BY probability_similar DESC
 LIMIT 10
-----
 
+#Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment but are not similar to Gallaudet University and Yeshiva University.
 
-[source,iql]
-----
 SELECT
     ROWID,
     SAT_score_math,
@@ -187,8 +185,6 @@ FROM (
     )
 ORDER BY probability_similar DESC
 LIMIT 10
-----
-
 # ${english_query}
 ${qstart} `;
     const response = await openai.createCompletion({
@@ -202,9 +198,9 @@ ${qstart} `;
       stop: ['#', ';'],
     });
     const output = qstart + response.data.choices[0].text;
-    console.log('XXXXXX ---- Strict test ----- XXXXXX');
+    console.log('YYYYYY ---- Strict test ----- YYYYYY');
     console.log(output);
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY');
     setQueryValue(output);
     return output;
   }
