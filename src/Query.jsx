@@ -61,96 +61,134 @@ export default function Query({ execute, initialQuery, statType }) {
     }
     var prompt = `
 ### IQL table with properties
-# data(Developer_ID,Age,Salary_USD,NumPy,Pandas,JavaScript,HTML_CSS,npm)
-# In this data table "Yes" always starts with a capital "Y"
-# In this data table "No" always starts with a capital "N"
-# Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference.
-# Unlike SQL, queries often start with the WITH keyword.
+# data(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
 
-# Reason about your output and remember that InferenceQL is not like SQL. Queries can start with the WITH keyword. 
-# We create context with a WITH statement to modify the model.
+# Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
+# In the example, the data table is called college_records and the model is called college_record_generator.
 
-# Stackoverflow Developer Survey
-#### Data queries
-# Show me the first 20 rows of the data
-SELECT * FROM data LIMIT 20
-# Explore the developer records
-SELECT * FROM data LIMIT 5
-#Rows are developers.
-### Search/find queries
-# Never use WHERE. InferenceQL can't handle WHERE.
-# InferenceQL does not have the keyword IN.
-# Questions or prompts that start with the word find need the WITH keyword.
-# The WITH keyword has to appear at the top level of the Query.
-# Never use WITH if it's not the first line of the query.
-# The WITH keyword allows you to bind names to values for the lifetime of a query. This can be useful in situations where you want the same value to be used for every row in a table. One example is conditioning a model for use in a SELECT expression. Unlike in SQL, WITH is always to first keyword in a query. After the WITH binding, a column indicates the start of the SELECT query.
-WITH (baseline_model CONDITIONED BY VAR NumPy = "Yes") AS search_model:
-  SELECT PROBABILITY OF VAR Python = "Yes" UNDER search_model.
-# WITH is also useful to find similar developers. For finding similar developers, we can incorporate a label into the model.
-# Any query that incorporates a label needs to start with WITH INCORPORATE.
-# A model expression that incorporated a label can be written as follows, where baseline_model in the model
-INCORPORATE (1 = true, 2 = true) INTO baseline_model.
-# Search queries are queries where users want to find similar developers. They always start with the word "find".
-# Search queries start with the WITH keyword.
-# Search queries incorporate information about sparse labels into the model, that is later used with a SELECT. The following is a beginning of a search query:
-WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model AS search_model:
-# Search queries always provide labels of the form (x = true, y = true, ...).
-# For example, find 10 developers that are similar to developers with ID 1 and ID 2
-WITH INCORPORATE (1 = true, 2 = true) INTO baseline_model AS search_model:
-    SELECT
-        Age, Salary_USD, NumPy, Pandas, JavaScript, HTML_CSS, npm,
-        PROBABILITY DENSITY OF VAR label = true
-            UNDER search_model CONDITIONED BY
-                VAR NumPy = NumPy AND
-                VAR Pandas = Pandas AND
-                VAR HTML_CSS = HTML_CSS AND
-                VAR JavaScript = JavaScript AND
-                VAR npm = npm
-                    AS p FROM data
-    ORDER BY p DESC
-    LIMIT 10
-# Find 10 developers that are similar to developers with ID 2 and ID 3
-WITH INCORPORATE (2 = true, 3 = true) INTO baseline_model AS search_model:
-    SELECT
-        Age, Salary_USD, NumPy, Pandas, JavaScript, HTML_CSS, npm,
-        PROBABILITY DENSITY OF VAR label = true
-            UNDER search_model CONDITIONED BY
-                VAR NumPy = NumPy AND
-                VAR Pandas = Pandas AND
-                VAR HTML_CSS = HTML_CSS AND
-                VAR JavaScript = JavaScript AND
-                VAR npm = npm
-                    AS p FROM data
-    ORDER BY p DESC
-    LIMIT 10
-# Find 10 developers that are similar to developers with ID 2, ID 3 and 4
-WITH INCORPORATE (2 = true, 3 = true, 4 = true) INTO baseline_model AS search_model:
-    SELECT
-        Age, Salary_USD, NumPy, Pandas, JavaScript, HTML_CSS, npm,
-        PROBABILITY DENSITY OF VAR label = true
-            UNDER search_model CONDITIONED BY
-                VAR NumPy = NumPy AND
-                VAR Pandas = Pandas AND
-                VAR HTML_CSS = HTML_CSS AND
-                VAR JavaScript = JavaScript AND
-                VAR npm = npm
-                    AS p FROM data
-    ORDER BY p DESC
-    LIMIT 10
-# Find 10 developers that are similar to developers with ID 10, ID 11 and 15
-WITH INCORPORATE (10 = true, 11 = true, 15 = true) INTO baseline_model AS search_model:
-    SELECT
-        Age, Salary_USD, NumPy, Pandas, JavaScript, HTML_CSS, npm,
-        PROBABILITY DENSITY OF VAR label = true
-            UNDER search_model CONDITIONED BY
-                VAR NumPy = NumPy AND
-                VAR Pandas = Pandas AND
-                VAR HTML_CSS = HTML_CSS AND
-                VAR JavaScript = JavaScript AND
-                VAR npm = npm
-                    AS p FROM data
-    ORDER BY p DESC
-    LIMIT 10
+# Show me 5 records.
+SELECT * FROM college_records LIMIT 5
+# Show me 5 rows of the data
+SELECT * FROM college_records LIMIT 5
+
+# Always SELECT the ROWID.
+SELECT ROWID, Size FROM college_records LIMIT 5
+
+# Show me colleges where Size is smaller than 7000, median student debt is smaller than 10000 and which are in a cityl
+SELECT
+    ROWID,
+    SAT_score_math,
+    Admission_rate,
+    Size,
+    Median_debt,
+    Instructional_invest,
+    Locale
+FROM college_records
+WHERE
+    Size < 70000 AND
+    Median_debt < 10000 AND
+    Instructional_invest > 50000 AND (
+        Locale = "City: Small" OR
+        Locale = "City: Midsize" OR
+        Locale = "City: Large"
+    )
+----
+
+# Scalar expressions evaluate to scalar values. A scalar value refers to a single value. The values of cells in tables are scalar values. The expressions that follow the SELECT keyword are scalar expressions.
+
+# One example of a scalar expression is SIMILARITY TO. SIMILARITY TO compares rows. Rows can be indexed with names. SIMILARITY TO also works with HYPOTHETICAL ROWs. Such rows don't exist in the data table.
+
+# Show me colleges that are similar to a hypothetical college in a midsize city, with a size of 8000 students and a median debt of 10000 dollars and invesment in teaching 600000 in the context of institutional investment.
+SELECT
+    ROWID,
+    SAT_score_math,
+    Admission_rate,
+    Size,
+    Median_debt,
+    Instructional_invest,
+    Locale,
+    SIMILAR TO
+            HYPOTHETICAL ROW (
+              Locale = "City: Midsize",
+              Size = 8000,
+              Median_debt = 10000,
+              Instructional_invest = 60000
+            )
+    IN CONTEXT OF Instructional_invest
+    UNDER college_record_generator
+    AS probability_similar
+FROM college_records
+ORDER BY probability_similar DESC
+LIMIT 10
+
+
+# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment..
+SELECT
+    ROWID,
+    SAT_score_math,
+    Admission_rate,
+    Size,
+    Median_debt,
+    Instructional_invest,
+    Locale,
+    SIMILAR TO
+      "Massachusetts Institute of Technology",
+      "Harvard University",
+      "Duke University",
+      "Yale University"
+    IN CONTEXT OF Instructional_invest
+    UNDER college_record_generator
+    AS probability_similar
+FROM (
+    SELECT *
+    FROM college_records
+    WHERE Admission_rate > 0.1 AND (
+        Locale = "City: Small" OR
+        Locale = "City: Midsize" OR
+        Locale = "City: Large")
+    )
+ORDER BY probability_similar DESC
+LIMIT 10
+----
+
+
+[source,iql]
+----
+SELECT
+    ROWID,
+    SAT_score_math,
+    Admission_rate,
+    Size,
+    Median_debt,
+    Instructional_invest,
+    Locale,
+    SIMILAR TO
+        (
+            "Massachusetts Institute of Technology",
+            "Harvard University",
+            "Duke University",
+            "Yale University"
+            IN CONTEXT OF Instructional_invest
+        )
+        AND ( NOT
+            "Gallaudet University",
+            "Yeshiva University"
+            IN CONTEXT OF SAT_score_math
+        )
+    UNDER college_record_generator
+    AS probability_similar
+FROM (
+    SELECT *
+    FROM college_records
+    WHERE Admission_rate > 0.1 AND (
+        Locale = "City: Small" OR
+        Locale = "City: Midsize" OR
+        Locale = "City: Large")
+    )
+ORDER BY probability_similar DESC
+LIMIT 10
+----
+
 # ${english_query}
 ${qstart} `;
     const response = await openai.createCompletion({
