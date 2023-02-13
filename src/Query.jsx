@@ -149,41 +149,6 @@ FROM (
     )
 ORDER BY probability_similar DESC
 LIMIT 10
-
-# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the context of institutional investment but not similar to Gallaudet and Yeshiva and and are easier to get into.
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale,
-    SIMILAR TO
-        (
-            "Massachusetts Institute of Technology",
-            "Harvard University",
-            "Duke University",
-            "Yale University"
-            IN CONTEXT OF Instructional_invest
-        )
-        AND ( NOT
-            "Gallaudet University",
-            "Yeshiva University"
-            IN CONTEXT OF SAT_score_math
-        )
-    UNDER college_record_generator
-    AS probability_similar
-FROM (
-    SELECT *
-    FROM college_records
-    WHERE Admission_rate > 0.1 AND (
-        Locale = "City: Small" OR
-        Locale = "City: Midsize" OR
-        Locale = "City: Large")
-    )
-ORDER BY probability_similar DESC
-LIMIT 10
 # ${english_query}
 ${qstart} `;
     const response = await openai.createCompletion({
