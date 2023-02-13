@@ -65,7 +65,7 @@ export default function Query({ execute, initialQuery, statType }) {
 )
 
 # Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
-# In the example, the data table is called college_records and the model is called college_record_generator.
+# In the example, the data table is called restaurant_records and the model is called restaurant_record_generator.
 
 # Show me 5 records all columns
 SELECT * FROM restaurant_records LIMIT 5
