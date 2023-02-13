@@ -92,8 +92,6 @@ WHERE
         Locale = "City: Midsize" OR
         Locale = "City: Large"
     )
-----
-
 # Scalar expressions evaluate to scalar values. A scalar value refers to a single value. The values of cells in tables are scalar values. The expressions that follow the SELECT keyword are scalar expressions.
 
 # One example of a scalar expression is SIMILARITY TO. SIMILARITY TO compares rows. Rows can be indexed with names. SIMILARITY TO also works with HYPOTHETICAL ROWs. Such rows don't exist in the data table.
