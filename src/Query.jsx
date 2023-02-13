@@ -122,7 +122,7 @@ ORDER BY probability_similar DESC
 LIMIT 10
 
 
-Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment.
+# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the context of institutional investment but are easier to get into
 SELECT
     ROWID,
     SAT_score_math,
@@ -150,8 +150,7 @@ FROM (
 ORDER BY probability_similar DESC
 LIMIT 10
 
-#Show me colleges that are similar to MIT, Harvard, Duke and Yale in the contest of institutional investment but are not similar to Gallaudet University and Yeshiva University.
-
+# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the context of institutional investment but not similar to Gallaudet and Yeshiva and and are easier to get into.
 SELECT
     ROWID,
     SAT_score_math,
