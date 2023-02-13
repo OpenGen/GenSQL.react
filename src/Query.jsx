@@ -61,90 +61,40 @@ export default function Query({ execute, initialQuery, statType }) {
     }
     var prompt = `
 ### IQL table with properties
-# college_records(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
+# restaurant_records(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
+)
 
 # Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
 # In the example, the data table is called college_records and the model is called college_record_generator.
 
-# Show me 5 records.
-SELECT * FROM college_records LIMIT 5
+# Show me 5 records all columns
+SELECT * FROM restaurant_records LIMIT 5
 # Show me 5 rows of the data
-SELECT * FROM college_records LIMIT 5
+SELECT * FROM restaurant_records LIMIT 5
 
 # Always SELECT the ROWID.
-SELECT ROWID, Size FROM college_records LIMIT 5
+SELECT ROWID, Size FROM restaurant_records LIMIT 5
 
-# Show me colleges where Size is smaller than 7000, median student debt is smaller than 10000 and which are in a cityl
+# Show me restauants similar to a hypothetical restaurant in Ciudad Victoria with a rating of 2.
 SELECT
     ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale
-FROM college_records
-WHERE
-    Size < 70000 AND
-    Median_debt < 10000 AND
-    Instructional_invest > 50000 AND (
-        Locale = "City: Small" OR
-        Locale = "City: Midsize" OR
-        Locale = "City: Large"
-    )
-# Scalar expressions evaluate to scalar values. A scalar value refers to a single value. The values of cells in tables are scalar values. The expressions that follow the SELECT keyword are scalar expressions.
-
-# One example of a scalar expression is SIMILARITY TO. SIMILARITY TO compares rows. Rows can be indexed with names. SIMILARITY TO also works with HYPOTHETICAL ROWs. Such rows don't exist in the data table.
-
-# Show me colleges that are similar to a hypothetical college in a midsize city, with a size of 8000 students and a median debt of 10000 dollars and investment in teaching 600000 in the context of institutional investment.
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale,
+    rating_service,
+    rating_food,
+    rating_overall,
+    cuisine,
+    open_late_Sunday,
+    latitude,
+    longitude,
     SIMILAR TO
             HYPOTHETICAL ROW (
-              Locale = "City: Midsize",
-              Size = 8000,
-              Median_debt = 10000,
-              Instructional_invest = 60000
+              city = "Ciudad Victoria",
+              rating_food = 2.0
             )
-    IN CONTEXT OF Instructional_invest
-    UNDER college_record_generator
+    IN CONTEXT OF rating_food
+    UNDER restaurant_record_generator
     AS probability_similar
-FROM college_records
-ORDER BY probability_similar DESC
-LIMIT 10
-
-
-# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the context of institutional investment but are easier to get into
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale,
-    SIMILAR TO
-      "Massachusetts Institute of Technology",
-      "Harvard University",
-      "Duke University",
-      "Yale University"
-    IN CONTEXT OF Instructional_invest
-    UNDER college_record_generator
-    AS probability_similar
-FROM (
-    SELECT *
-    FROM college_records
-    WHERE Admission_rate > 0.1 AND (
-        Locale = "City: Small" OR
-        Locale = "City: Midsize" OR
-        Locale = "City: Large")
-    )
+FROM restaurant_records
+WHERE cuisine = "Japanese" OR cuisine IS NULL
 ORDER BY probability_similar DESC
 LIMIT 10
 # ${english_query}
