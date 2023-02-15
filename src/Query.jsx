@@ -168,6 +168,38 @@ FROM developer_records
     Ethnicity
     FROM
     SELECT * FROM developer_records
+# Find 5 developers that are similar to a hypothetical female developer who knows Python and NumPy.
+SELECT
+    ROWID,
+    NumPy,
+    Python,
+    Pandas,
+    Gender,
+    SIMILAR TO
+            HYPOTHETICAL ROW (
+              NumPy = "Yes",
+              Python = "Yes",
+              Gender = "Woman"
+            )
+    IN CONTEXT OF NumPy
+    UNDER developer_record_generator
+    AS probability_similar
+FROM developer_records
+ORDER BY probability_similar DESC
+LIMIT 5
+# Find 5 developers that are similar to developer 230 in the context of their Python skills and to developer 435 in the context of gender.
+SELECT
+    ROWID,
+    NumPy,
+    Python,
+    Pandas,
+    Gender,
+    SIMILAR TO ("230" IN CONTEXT OF Python) AND ("435" IN CONTEXT OF Gender)
+    UNDER developer_record_generator
+    AS probability_similar
+FROM developer_records
+ORDER BY probability_similar DESC
+LIMIT 5
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
