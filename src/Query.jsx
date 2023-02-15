@@ -54,53 +54,124 @@ export default function Query({ execute, initialQuery, statType }) {
   const editorRef = React.useRef();
 
   async function english_to_iql(english_query) {
-    if (english_query.startsWith('Find', 0)) {
-      var qstart = 'WITH';
-    } else {
-      var qstart = 'SELECT';
-    }
     var prompt = `
 ### IQL table with properties
-# restaurant_records(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
-)
-
-# Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
-# In the example, the data table is called restaurant_records and the model is called restaurant_record_generator.
-
-# Show me 5 records all columns
-SELECT * FROM restaurant_records LIMIT 5
-# Show me 5 rows of the data
-SELECT * FROM restaurant_records LIMIT 5
-
-# Always SELECT the ROWID.
-SELECT ROWID, Size FROM restaurant_records LIMIT 5
-
-# Show me restauants similar to a hypothetical restaurant in Ciudad Victoria with a rating of 2.
+# data(Remote_work_status, Education, Years_coding, Years_coding_professionally, Developer_type, Org_size, Purchase_influence, Country, Attitude_towards_Blockchain, Age, Gender, Trans, Sexuality, Ethnicity, Independent_contributor_or_manager, Work_experience, I_have_interactions_outside_team, Knowledge_silos_prevent_me_sharing_ideas, Information_available_in_my_org, I_find_answers_with_existing_resources, I_know_what_resource_to_use_to_find_information, I_often_answer_questions_repeatedly, Waiting_on_answers_disrupts_my_workflow, Involved_in_hiring, Use_learning_resources_provided_by_employer, Employer_gives_time_to_learn_skills, Salary_USD, Books_Physical_media, On_the_job_training, Coding_Bootcamp, Friend_or_family_member, Colleague, Learned_coding_in_school, Hackathons_virtual_or_in-person, Interactive_tutorial, Certification_videos, Technical_documentation, Blogs, Auditory_material, Video-based_Online_Courses, Online_books, Online_forum, Programming_Games, Written-based_Online_Courses, Stack_Overflow, Written_Tutorials, Coding_sessions_live_or_recorded, Online_challenges, How-to_videos, Skillsoft, Udacity, edX, Coursera, Pluralsight, Codecademy, Udemy, Lua, PowerShell, Java, Kotlin, Groovy, Julia, Ruby, SAS, SQL, Solidity, C, Swift, Elixir, MATLAB, Rust, Objective-C, Python, Assembly, Clojure, VBA, COBOL, TypeScript, Bash_Shell, JavaScript, PHP, F_sharp, Perl, Fortran, Haskell, HTML_CSS, C_plusplus, C_sharp, Dart, R, Delphi, Scala, LISP, Go, DynamoDB, Redis, Cloud_Firestore, PostgreSQL, Neo4j, Microsoft_SQL_Server, Couchbase, Firebase_Realtime_Database, IBM_DB2, MongoDB, Elasticsearch, SQLite, Oracle, MySQL, Cassandra, MariaDB, OVH, Microsoft_Azure, Google_Cloud, AWS, OpenStack, Oracle_Cloud_Infrastructure, Heroku, Linode, IBM_Cloud_or_Watson, Colocation, Firebase, Managed_Hosting, VMware, DigitalOcean, Phoenix, Angular_dot_js, FastAPI, Laravel, Svelte, Django, Angular, Gatsby, Symfony, Play_Framework, Ruby_on_Rails, Nuxt_dot_js, Flask, jQuery, Blazor, Deno, Next_dot_js, Vue_dot_js, Fastify, ASP_dot_NET_Core_, ASP_dot_NET, Drupal, Node_dot_js, Express, React_dot_js, Flutter, Hugging_Face_Transformers, Cordova, Capacitor, Apache_Spark, GTK, Tidyverse, NumPy, Xamarin, Keras, Apache_Kafka, Ionic, Qt, Pandas, Hadoop, Torch_PyTorch, _dot_NET, TensorFlow, Scikit-learn, React_Native, Spring, Electron, Chef, npm, Unreal_Engine, Docker, Flow, Pulumi, Unity_3D, Kubernetes, Terraform, Ansible, Puppet, Yarn, Homebrew, GoLand, Atom, CLion, Eclipse, RStudio, Rider, Nano, Visual_Studio, IPython_Jupyter, Emacs, IntelliJ, PhpStorm, Sublime_Text, Qt_Creator, TextMate, Webstorm, Neovim, Xcode, RAD_Studio, Android_Studio, RubyMine, NetBeans, PyCharm, Vim, Spyder, Notepad_plusplus, Visual_Studio_Code, WSL, Windows, Linux-based, macOS, BSD, SVN, Git, Mercurial, I_have_a_concentration_or_memory_disorder, I_have_a_mood_or_emotional_disorder, I_have_learning_differences, I_have_an_autism_spectrum_disorder, I_have_anxiety_disorder)
+In this data table "Yes" always starts with a capital "Y"
+In this data table "No" always starts with a capital "N"
+# Stackoverflow Developer Survey
+#### Data queries
+# Explore the developer records
+SELECT * FROM developer_records LIMIT 5
+# Show the salary, age, and years coding for developers in the datatable that have experience with Clojure, JavaScript and Python.
 SELECT
-    ROWID,
-    rating_service,
-    rating_food,
-    rating_overall,
-    cuisine,
-    open_late_Sunday,
-    latitude,
-    longitude,
-    SIMILAR TO
-            HYPOTHETICAL ROW (
-              city = "Ciudad Victoria",
-              rating_food = 2.0
-            )
-    IN CONTEXT OF rating_food
-    UNDER restaurant_record_generator
-    AS probability_similar
-FROM restaurant_records
-WHERE cuisine = "Japanese" OR cuisine IS NULL
-ORDER BY probability_similar DESC
+Salary_USD,
+Age,
+Years_coding
+FROM developer_records
+WHERE
+Clojure = "Yes" AND JavaScript = "Yes" AND Python = "Yes"
+# Show me salary, age and work experience for developers knowing Clojure and Python
+SELECT
+    Salary_USD,
+    Age,
+    Work_experience
+FROM developer_records WHERE Clojure = "Yes" AND Python = "Yes"
+### Generate synthetic data
+# All queries with GENERATE need to start with a SELECT.
+# All queries with GENERATE need to end with LIMIT and a number.
+# Show me four synthetic developer records.
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
+# Show me four synthetic developer records.
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
+# Show me two synthetic developer records
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 2
+# Generate four synthetic developer records
+SELECT * FROM GENERATE * UNDER developer_record_generator LIMIT 4
+# Generate four female synthetic developer records
+SELECT * FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Gender="Woman"
+LIMIT 4
+# Generate synthetic developer records for developers who know Python and Clojure and who learn less than 150k
+SELECT * FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Clojure="Yes" AND Python="Yes" AND Salary_USD < 150000
+LIMIT 4
+# show the distribution of salary, age, and experience for developers in the database that have experience with Clojure, JavaScript and Python.
+# show me salary, age and work experience for 1000 synthetic developers knowing clojure and python
+SELECT Salary_USD, Age, Work_experience FROM
+  GENERATE *
+    UNDER developer_record_generator
+      GIVEN Clojure="Yes" AND Python="Yes"
+LIMIT 1000
+### Probability queries
+# How likely is it that developers who know Python and Rust know Clojure?
+SELECT
+  PROBABILITY OF Clojure="Yes"
+    UNDER developer_record_generator
+      GIVEN Python="Yes" AND Rust="Yes"
+        AS likelihood
+FROM developer_records LIMIT 1
+# How likely is it that developers data know Python and Java know Clojure and SQL?
+SELECT
+  PROBABILITY OF Clojure="Yes" AND SQL="Yes"
+    UNDER developer_record_generator
+      GIVEN Python="Yes" AND Java="Yes"
+        AS likelihood
+FROM developer_records LIMIT 1
+# How likely is it that developers data know Python and Java know Clojure and SQL?
+SELECT
+  PROBABILITY OF Clojure="Yes" AND SQL="Yes"
+    UNDER developer_record_generator
+      GIVEN Python="Yes" AND Java="Yes"
+        AS likelihood
+FROM developer_records LIMIT 1
+# Show me developers' salary, gender, and ethnicity
+SELECT Salary_USD, Gender, Ethnicity FROM developer_records
+# List the 10 most frequent gender and ethnicity pairs
+SELECT
+  COUNT(*) AS n,
+  Gender,
+  Ethnicity
+FROM developer_records
+GROUP BY Gender, Ethnicity
+ORDER BY n DESC
 LIMIT 10
+# Show me the probability of developers' salaries given their gender
+SELECT
+  Salary_USD,
+  Gender,
+  PROBABILITY OF Salary_USD
+    UNDER developer_record_generator
+      GIVEN Gender
+        AS probability_salary
+FROM developer_records
+# Show me the probability of developers' salaries given their ethnicity
+SELECT
+  Salary_USD,
+  Ethnicity,
+  PROBABILITY OF Salary_USD
+    UNDER developer_record_generator
+      GIVEN Ethnicity
+        AS probability_salary
+FROM developer_records
+# Show me developers gender, ethnicity, and how likely they are to be underpaid based on their experience and background
+  SELECT
+    PROBABILITY OF Salary_USD >  Salary_USD
+      UNDER developer_record_generator
+        GIVEN Years_coding_professionally AND Background
+        AS probability_underpaid,
+    Gender,
+    Ethnicity
+    FROM
+    SELECT * FROM developer_records
 # ${english_query}
-${qstart} `;
+SELECT `;
     const response = await openai.createCompletion({
-      model: 'text-davinci-003',
+      model: 'code-davinci-002',
       prompt: prompt,
       temperature: 0,
       max_tokens: 200,
@@ -109,10 +180,8 @@ ${qstart} `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = qstart + response.data.choices[0].text;
-    console.log('YYYYYY ---- Strict test ----- YYYYYY');
+    const output = 'SELECT ' + response.data.choices[0].text;
     console.log(output);
-    console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY');
     setQueryValue(output);
     return output;
   }
