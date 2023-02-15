@@ -67,6 +67,8 @@ SIMILAR TO does not need GENERATE
 #### Data queries
 # Explore the developer records
 SELECT * FROM developer_records LIMIT 5
+# Show me the 5 developer records
+SELECT * FROM developer_records LIMIT 5
 # Show the salary, age, and years coding for developers in the datatable that have experience with Clojure, JavaScript and Python.
 SELECT
 Salary_USD,
@@ -172,7 +174,7 @@ FROM developer_records
     Ethnicity
     FROM
     SELECT * FROM developer_records
-# Find 3 developers that are similar to a hypothetical female developer who knows Python and NumPy.
+# Find 3 developers that are similar to a hypothetical female developer who knows Python and NumPy, in the context of Python
 SELECT
     ROWID,
     NumPy,
@@ -185,13 +187,13 @@ SELECT
               Python = "Yes",
               Gender = "Woman"
             )
-    IN CONTEXT OF NumPy
+    IN CONTEXT OF Python
     UNDER developer_record_generator
     AS probability_similar
 FROM developer_records
 ORDER BY probability_similar DESC
 LIMIT 3
-# Find 5 developers that are similar to a hypothetical female developer who knows Python and NumPy.
+# Find 5 developers that are similar to a hypothetical female developer who knows Python and NumPy, in the context of Python
 SELECT
     ROWID,
     NumPy,
@@ -204,13 +206,13 @@ SELECT
               Python = "Yes",
               Gender = "Woman"
             )
-    IN CONTEXT OF NumPy
+    IN CONTEXT OF Python
     UNDER developer_record_generator
     AS probability_similar
 FROM developer_records
 ORDER BY probability_similar DESC
 LIMIT 5
-# Find 5 developers that are similar to a hypothetical who knows Python and NumPy.
+# Find 5 developers that are similar to a hypothetical developer who knows Python and NumPy.
 SELECT
     ROWID,
     NumPy,
