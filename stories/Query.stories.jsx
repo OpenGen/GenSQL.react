@@ -40,6 +40,24 @@ Empty.args = {
   execute: makeExecute(cats),
 };
 
+export const LLM_foo_data = Template.bind({});
+LLM_foo_data.args = {
+  execute: makeExecute(cats),
+  dataTableName: 'foo_table',
+  modelName: 'foo_generator',
+  columns: ['c1', 'c2', 'c3'],
+  rowsMeaning: 'Each row is a baz',
+};
+
+export const LLM_stackoverflow_test = Template.bind({});
+LLM_stackoverflow_test.args = {
+  execute: makeExecute(cats),
+  dataTableName: 'developer_record',
+  modelName: 'developer_record_generator',
+  columns: ['Gender', 'Age', 'Salary_USD'],
+  rowsMeaning: 'Each row is a software developer',
+};
+
 export const Populated = Template.bind({});
 Populated.args = {
   execute: makeExecute(cats),
