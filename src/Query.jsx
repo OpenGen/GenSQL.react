@@ -19,7 +19,7 @@ import WorldMap from './WorldMap';
 
 const { Configuration, OpenAIApi } = require('openai');
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: 'XXX',
 });
 const openai = new OpenAIApi(configuration);
 
@@ -43,7 +43,15 @@ const both =
     f2.apply(this, args);
   };
 
-export default function Query({ execute, initialQuery, statType }) {
+export default function Query({
+  execute,
+  initialQuery,
+  statType,
+  dataTableName,
+  modelName,
+  columns,
+  rowsMeaning,
+}) {
   const [isLoading, setIsLoading, setNotLoading] = useSwitch(false);
   const [englishQueryValue, setEnglishQueryValue] = React.useState();
   const [queryValue, setQueryValue] = React.useState('');
@@ -60,93 +68,98 @@ export default function Query({ execute, initialQuery, statType }) {
       var qstart = 'SELECT';
     }
     var prompt = `
-### IQL table with properties
-# college_records(ROWID,Region,Ownership,Locale,Faculty_salary,Admission_rate,SAT_score_critical_reading,SAT_score_math,SAT_score_writing,ACT_score_english,ACT_score_math,ACT_score_writing,Pell_grant_rate,Federal_loan_rate,Median_debt,Students_with_any_loan,Completion_rate_4yr,Cost,Earnings_10_yrs_after_entry_percentile_10,Earnings_10_yrs_after_entry_percentile_90,Earnings_10_yrs_after_entry_mean,Earnings_10_yrs_after_entry_mean_female_students,Earnings_10_yrs_after_entry_mean_male_students,default_rate,Size,Ethnicity_white,Retention_rate,Share_25_older,Share_firstgeneration,Female_share,Married,Veteran,First_generation,Instructional_invest,Average_net_price)
-
-# Queries are short programs in InferenceQL and SQL. Return queries in InferenceQL. InferenceQL is like SQL, but add adds keywords for probabilistic inference. It uses a model to do this.
-# In the example, the data table is called college_records and the model is called college_record_generator.
-
-# Show me 5 records.
-SELECT * FROM college_records LIMIT 5
-# Show me 5 rows of the data
-SELECT * FROM college_records LIMIT 5
-
-# Always SELECT the ROWID.
-SELECT ROWID, Size FROM college_records LIMIT 5
-
-# Show me colleges where Size is smaller than 7000, median student debt is smaller than 10000 and which are in a cityl
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale
-FROM college_records
-WHERE
-    Size < 70000 AND
-    Median_debt < 10000 AND
-    Instructional_invest > 50000 AND (
-        Locale = "City: Small" OR
-        Locale = "City: Midsize" OR
-        Locale = "City: Large"
-    )
-# Scalar expressions evaluate to scalar values. A scalar value refers to a single value. The values of cells in tables are scalar values. The expressions that follow the SELECT keyword are scalar expressions.
-
-# One example of a scalar expression is SIMILARITY TO. SIMILARITY TO compares rows. Rows can be indexed with names. SIMILARITY TO also works with HYPOTHETICAL ROWs. Such rows don't exist in the data table.
-
-# Show me colleges that are similar to a hypothetical college in a midsize city, with a size of 8000 students and a median debt of 10000 dollars and investment in teaching 600000 in the context of institutional investment.
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale,
-    SIMILAR TO
-            HYPOTHETICAL ROW (
-              Locale = "City: Midsize",
-              Size = 8000,
-              Median_debt = 10000,
-              Instructional_invest = 60000
-            )
-    IN CONTEXT OF Instructional_invest
-    UNDER college_record_generator
-    AS probability_similar
-FROM college_records
-ORDER BY probability_similar DESC
-LIMIT 10
+InferenceQL is a language very similar to SQL but which support keywords for probabilistic inference.
+It uses a model to do this.
+In the following, we'll give examples of InferenceQL queries. Variables are indicated with
+[]. We differentiate the following variables:
+[n] is a positive integer.
+[data] is a data table name in the database.
+[column] is a column name in a data table.
+[model] is a model name.
+[model-expr] is a model expression involving a [model].
+[value] is a possible cell value for a table.
+[rows] are rows in the datatable, they executing the model returns such a row. They have
+inhere meaning defined below.
 
 
-# Show me colleges that are similar to MIT, Harvard, Duke and Yale in the context of institutional investment but are easier to get into
-SELECT
-    ROWID,
-    SAT_score_math,
-    Admission_rate,
-    Size,
-    Median_debt,
-    Instructional_invest,
-    Locale,
-    SIMILAR TO
-      "Massachusetts Institute of Technology",
-      "Harvard University",
-      "Duke University",
-      "Yale University"
-    IN CONTEXT OF Instructional_invest
-    UNDER college_record_generator
-    AS probability_similar
-FROM (
+Show the data table
+SELECT * FROM [data]
+# Show [column] and [column] from the [data]
+SELECT [column], [column] FROM [table]
+# Show [n] rows from the [data]
+SELECT * FROM [table] LIMIT [n]
+# Show [n] rows from the [data]
+SELECT * FROM [table] LIMIT [n]
+# Show [n] rows from the [data] where column is [value]
+SELECT * FROM [table] WHERE [column LIMIT] [n]
+# SELECT queries can use aggregators on any [column]. Simple aggregators are:
+AVG
+MEDIAN
+MIN
+MAX
+SUM
+What's the average [column] in the [data]
+SELECT AVG([column]) FROM [data]
+# The PERCENTILE-IN aggregator also takes parameter
+SELECT PERCENTILE-IN([column], [value]) FROM [data]
+# The GENERATE expression evaluates to a table of samples from a model. It returns synthetic
+data. The tables returned by GENERATE are infinite. A query comprised of a GENERATE expression will run forever. In order to view the output if a GENERATE expression you should limit its output by wrapping it with a SELECT that includes a LIMIT clause.
+# Generate [n] synthetic rows
+SELECT *
+FROM
+  GENERATE
+  *
+  UNDER [model]
+LIMIT [n]
+# Generate [n] synthetic values for [column]
+SELECT *
+FROM
+  GENERATE
+  [column]
+  UNDER [model]
+LIMIT [n]
+# Generate a few synthetic [rows] for [column]
+SELECT *
+FROM
+  GENERATE
+  [column]
+  UNDER [model]
+LIMIT [n]
+# Because tables returned by GENERATE are infinite you need to SELECT them first before using an aggregator on generated data. This can be ensured by using an extra SELECT and parentheses.
+What's the median of bar in a synthetic population of 100 [rows]?
+SELECT MEDIAN([column]) FROM (
     SELECT *
-    FROM college_records
-    WHERE Admission_rate > 0.1 AND (
-        Locale = "City: Small" OR
-        Locale = "City: Midsize" OR
-        Locale = "City: Large")
-    )
-ORDER BY probability_similar DESC
-LIMIT 10
+        FROM
+          GENERATE
+          [column]
+          UNDER [model]
+    LIMIT [n]
+)
+
+# Model expression evaluate to a models. The use the keyword GIVEN.
+You can use it to condition models to ensure column values in returned synthetic agrees
+with constrains affecting the  [value]s the generated data can take.
+
+Generate synthetic data with [column] being [value] and [column] > [value].
+SELECT *
+FROM
+  GENERATE
+  [column]
+  UNDER [model]
+  GIVEN [column] = [value] AND [column] > [value]
+LIMIT [n]
+# Only return a single InferenceQL query consisting of valid InferenceQL code. Don't return any prose.
+Do not any code returned with the ; character.
+
+In this database, there is one data table called ${dataTableName}.
+In this database, there is one model called ${modelName}
+In the records table, there are ${
+      columns.length
+    } columns, called: ${columns.join(', ')}
+
+${rowsMeaning}
+
+Replace any variables with these values. Users may refer to these values with synomyms but queries need to have the exact values including the correct capitalization.
 # ${english_query}
 ${qstart} `;
     const response = await openai.createCompletion({
@@ -160,9 +173,8 @@ ${qstart} `;
       stop: ['#', ';'],
     });
     const output = qstart + response.data.choices[0].text;
-    console.log('YYYYYY ---- Strict test ----- YYYYYY');
     console.log(output);
-    console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY');
+    console.log(dataTableName);
     setQueryValue(output);
     return output;
   }
