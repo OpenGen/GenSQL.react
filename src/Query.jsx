@@ -101,7 +101,7 @@ FROM developer_records
     SELECT * FROM developer_records
 # ${english_query}
 SELECT `;
-    const response = await openai.createCompletion({
+    const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       prompt: prompt,
       temperature: 0,
@@ -111,7 +111,7 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = 'SELECT ' + response.data.choices[0].text;
+    const output = 'SELECT ' + response.data.choices[0].message.content;
     console.log(output);
     setQueryValue(output);
     return output;
