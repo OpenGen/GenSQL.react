@@ -23,9 +23,6 @@ dependencies:
   '@mui/material':
     specifier: ^5.10.14
     version: 5.10.14(@emotion/react@11.10.5)(@emotion/styled@11.10.5)(@types/react@18.0.21)(react-dom@17.0.2)(react@17.0.2)
-  grit:
-    specifier: ^0.2.5
-    version: 0.2.5
   highlight.js:
     specifier: ^11.6.0
     version: 11.6.0
@@ -3892,7 +3889,6 @@ packages:
 
   /@types/node@18.18.5:
     resolution: {integrity: sha512-4slmbtwV59ZxitY4ixUZdy1uRLf9eSIvBWPQxNjhHYWEtn0FryfKpyS2cvADYXTayWdKEIsJengncrVvkI4I6A==}
-    dev: false
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -3990,7 +3986,7 @@ packages:
   /@types/webpack@5.28.0:
     resolution: {integrity: sha512-8cP0CzcxUiFuA9xGJkfeVpqmWTk9nx6CWwamRGCj95ph1SmlRRk9KlCZ6avhCbZd4L68LvYT6l1kpdEnQXrF8w==}
     dependencies:
-      '@types/node': 18.11.3
+      '@types/node': 18.18.5
       tapable: 2.2.1
       webpack: 5.74.0
     transitivePeerDependencies:
@@ -7602,11 +7598,6 @@ packages:
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
-
-  /grit@0.2.5:
-    resolution: {integrity: sha512-8du7D1x4A5sN62mYyS2eSlmlGTiMbyHMCkVieE6iCI828Sm38tSDlqUDEHYPG8iV4rJxjua2H210O6rrYRMIXQ==}
-    engines: {node: '>=0.4.1'}
-    dev: false
 
   /handlebars@4.7.7:
     resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
