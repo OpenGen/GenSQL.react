@@ -16,8 +16,8 @@ import HighlightInput from './HighlightInput';
 import TextField from '@mui/material/TextField';
 import PairPlot from './PairPlot';
 import WorldMap from './WorldMap';
+import OpenAI from 'openai';
 
-const { Configuration, OpenAIApi } = require('openai');
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -101,7 +101,7 @@ FROM developer_records
     SELECT * FROM developer_records
 # ${english_query}
 SELECT `;
-    const response = await openai.createCompletion({
+    const response = await openai.chat.completions.create({
       model: 'code-davinci-002',
       prompt: prompt,
       temperature: 0,
@@ -111,7 +111,7 @@ SELECT `;
       presence_penalty: 0.0,
       stop: ['#', ';'],
     });
-    const output = 'SELECT ' + response.data.choices[0].text;
+    const output = 'SELECT ' + response.choices[0].text;
     console.log(output);
     setQueryValue(output);
     return output;
