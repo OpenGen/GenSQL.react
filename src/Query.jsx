@@ -102,7 +102,7 @@ FROM developer_records
 # ${english_query}
 SELECT `;
     const response = await openai.createCompletion({
-      model: 'code-davinci-002',
+      model: 'gpt-4',
       prompt: prompt,
       temperature: 0,
       max_tokens: 200,
