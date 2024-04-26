@@ -6,16 +6,16 @@
 pnpm install 
 ```
 
-## Install storybook
-
-```shell
-pnpm add InferenceQL/storybook
-```
-
 ## Development
+
+To get the right version of pnpm/npm, type:
+
+```shell 
+nix-shell
+```
 
 To run the Storybook type:
 
 ```shell
-pnpm storybook
+pnpm run storybook
 ```
