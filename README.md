@@ -1,4 +1,4 @@
-# inferenceql.react
+# GenSQL.react
 
 ## Install dependencies
 

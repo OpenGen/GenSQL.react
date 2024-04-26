@@ -56,7 +56,7 @@ const operators = ['AND', 'NOT', 'OR'];
 
 // https://prismjs.com/tokens.html#standard-tokens
 
-Prism.languages.iql = {
+Prism.languages.gensql = {
   boolean: /\b(?:true|false)\b/,
   constant: /\bNULL\b/i,
   number: /\b-?[0-9]+\.?(?:[0-9]+)?\b/,
@@ -146,7 +146,7 @@ const PrismInput = React.forwardRef(
         Prism={Prism}
         theme={prismTheme}
         code={value}
-        language="iql"
+        language="gensql"
       >
         {({ prismClassName, style, tokens, getTokenProps }) => (
           <pre className={classes.pre}>

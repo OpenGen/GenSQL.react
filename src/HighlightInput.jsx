@@ -108,8 +108,8 @@ const language = ({ regex }) => {
   };
 
   return {
-    name: 'IQL',
-    aliases: ['iql'],
+    name: 'GenSQL',
+    aliases: ['gensql'],
     case_insensitive: true,
     keywords: {
       keyword: KEYWORDS,
@@ -120,8 +120,8 @@ const language = ({ regex }) => {
   };
 };
 
-hljs.registerLanguage('iql', language);
-hljs.configure({ languages: ['iql', 'sql'] });
+hljs.registerLanguage('gensql', language);
+hljs.configure({ languages: ['gensql', 'sql'] });
 
 const useStyles = createStyles((theme, { error }) => ({
   pre: {
@@ -180,7 +180,7 @@ const HighlightInput = React.forwardRef(
       }
     };
 
-    const { value: innerHTML } = hljs.highlight(value, { language: 'iql' });
+    const { value: innerHTML } = hljs.highlight(value, { language: 'gensql' });
 
     /* eslint-disable react/no-danger  */
     /* eslint-disable jsx-a11y/no-static-element-interactions */

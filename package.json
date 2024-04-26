@@ -1,5 +1,5 @@
 {
-  "name": "@inferenceql/inferenceql.react",
+  "name": "@OpenGen/GenSQL.react",
   "version": "0.0.1-alpha",
   "dependencies": {
     "@mantine/core": "^5.6.0",
