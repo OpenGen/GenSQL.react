@@ -48,6 +48,10 @@
     "typescript": "^4.8.4"
   },
   "scripts": {
+    "clean": "scripts/clean.sh",
+    "format": "scripts/format.sh",
+    "lint": "scripts/lint.sh",
+    "prepare": "scripts/prepare.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
